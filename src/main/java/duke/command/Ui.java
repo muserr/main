@@ -67,6 +67,11 @@ public class Ui {
         showNumTasks(tasks);
     }
 
+    /**
+     * Displays Task objects in list given.
+     *
+     * @param tasks List of Task objects
+     */
     public void showTaskList(List<Task> tasks) {
         printIndented("Here are the tasks in your list:");
         showTasks(tasks);
@@ -118,7 +123,7 @@ public class Ui {
      *
      * @param line String containing description to be indented
      */
-    private void printIndented(String line) {
+    public void printIndented(String line) {
         System.out.println("    " + line);
     }
 
@@ -139,7 +144,7 @@ public class Ui {
      *
      * @param tasks List containing user tasks
      */
-    private void showTasks(List<Task> tasks) {
+    public void showTasks(List<Task> tasks) {
         int counter = 1;
         for (Task task : tasks) {
             printIndented(counter++ + ". " + task);

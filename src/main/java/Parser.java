@@ -1,12 +1,13 @@
-import duke.command.Command;
-import duke.command.ListCommand;
-import duke.command.FindCommand;
-import duke.command.DeleteCommand;
-import duke.command.DoneCommand;
 import duke.command.AddDeadlineCommand;
 import duke.command.AddEventCommand;
 import duke.command.AddTodoCommand;
 import duke.command.ByeCommand;
+import duke.command.Command;
+import duke.command.DeleteCommand;
+import duke.command.DoneCommand;
+import duke.command.FindCommand;
+import duke.command.ListCommand;
+import duke.command.ReminderCommand;
 import duke.dukeexception.DukeException;
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +40,8 @@ class Parser {
                 return new AddDeadlineCommand(arguments);
             case "event":
                 return new AddEventCommand(arguments);
+            case "reminder":
+                return new ReminderCommand();
             case "bye":
                 return new ByeCommand();
             default:
