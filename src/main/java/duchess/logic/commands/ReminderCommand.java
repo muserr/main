@@ -38,7 +38,7 @@ public class ReminderCommand extends Command {
     private List<Task> addDeadlines(TaskList taskList) {
         ArrayList<Task> reminderList = new ArrayList<>();
         for (Task task : taskList.getTasks()) {
-            if (task instanceof Deadline) {
+            if (task.toString().substring(0,3).equals("[D]")) {
                 reminderList.add(task);
             }
         }
