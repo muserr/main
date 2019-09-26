@@ -46,6 +46,4 @@ public class TaskList implements Serializable {
         }
         return events.stream().anyMatch(event -> event.clashesWith(newEvent));
     }
-
-
 }

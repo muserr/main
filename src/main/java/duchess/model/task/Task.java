@@ -27,4 +27,6 @@ public abstract class Task implements Serializable {
     public abstract Schedule isWithinTimeFrame(Date startDate, Date endDate);
 
     public abstract void snooze() throws DukeException;
+
+    public abstract Date getDate();
 }

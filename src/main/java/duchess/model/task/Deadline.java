@@ -5,6 +5,7 @@ import duchess.model.Schedule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -61,5 +62,10 @@ public class Deadline extends Task {
             return new Schedule(deadline, String.format("[D]%s %s", super.toString(), this.description));
         }
         return null;
+    }
+
+    @Override
+    public Date getDate() {
+        return this.deadline;
     }
 }

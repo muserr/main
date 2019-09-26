@@ -2,12 +2,13 @@ package duchess.logic.commands;
 
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.task.Deadline;
 import duchess.model.task.Task;
 import duchess.model.task.TaskList;
 import duchess.ui.Ui;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,11 +38,14 @@ public class ReminderCommand extends Command {
      */
     private List<Task> addDeadlines(TaskList taskList) {
         ArrayList<Task> reminderList = new ArrayList<>();
+        Date date = new Date();
         for (Task task : taskList.getTasks()) {
-            if (task.toString().substring(0,3).equals("[D]")) {
+            if (date.before(task.getDate())) {
                 reminderList.add(task);
             }
         }
+
+        reminderList = sortDeadlines(reminderList);
         return reminderList;
     }
 
@@ -54,5 +58,17 @@ public class ReminderCommand extends Command {
         } else {
             ui.showDeadlines(reminderList);
         }
+    }
+
+    /**
+     * Returns an ArrayList of Task in ascending order based on Date.
+     *
+     * @param taskList reminderList containing Tasks
+     * @return sorted reminderList in ascending order of Date
+     */
+    private ArrayList<Task> sortDeadlines(ArrayList<Task> taskList) {
+        Collections.sort(taskList,
+            (Task taskOne, Task taskTwo) -> taskOne.getDate().compareTo(taskTwo.getDate()));
+        return taskList;
     }
 }

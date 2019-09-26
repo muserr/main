@@ -107,4 +107,9 @@ public class Event extends Task {
         }
         return null;
     }
+
+    @Override
+    public Date getDate() {
+        return this.end;
+    }
 }
