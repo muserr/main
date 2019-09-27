@@ -3,12 +3,12 @@ package duchess.model.task;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.Schedule;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Todo extends Task {
     private String description;
-    private Date start;
 
     /**
      * Creates a todo task from given user input.
@@ -18,7 +18,6 @@ public class Todo extends Task {
      */
     public Todo(List<String> input) throws DukeException {
         this.description = String.join(" ", input);
-        this.start = new Date();
 
         if (input.size() == 0) {
             throw new DukeException("Format for todo: todo <task>");
@@ -45,13 +44,8 @@ public class Todo extends Task {
         throw new DukeException("You can't snooze that task.");
     }
 
-    /**
-     * Returns false when date is earlier than specified date.
-     *
-     * @return Boolean when comparing dates
-     */
     @Override
-    public Date getDate() {
-        return this.start;
+    public List<Task> getReminders() {
+        return new ArrayList<>();
     }
 }

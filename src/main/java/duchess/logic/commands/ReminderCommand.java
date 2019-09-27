@@ -6,10 +6,9 @@ import duchess.model.task.Task;
 import duchess.model.task.TaskList;
 import duchess.ui.Ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Searches Tasklist and filters out deadline objects.
@@ -37,16 +36,10 @@ public class ReminderCommand extends Command {
      * @param taskList of user inputs
      */
     private List<Task> addDeadlines(TaskList taskList) {
-        ArrayList<Task> reminderList = new ArrayList<>();
-        Date date = new Date();
-        for (Task task : taskList.getTasks()) {
-            if (date.before(task.getDate())) {
-                reminderList.add(task);
-            }
-        }
-
-        reminderList = sortDeadlines(reminderList);
-        return reminderList;
+        return taskList.getTasks().stream()
+                .map(task -> task.getReminders())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -58,17 +51,5 @@ public class ReminderCommand extends Command {
         } else {
             ui.showDeadlines(reminderList);
         }
-    }
-
-    /**
-     * Returns an ArrayList of Task in ascending order based on Date.
-     *
-     * @param taskList reminderList containing Tasks
-     * @return sorted reminderList in ascending order of Date
-     */
-    private ArrayList<Task> sortDeadlines(ArrayList<Task> taskList) {
-        Collections.sort(taskList,
-            (Task taskOne, Task taskTwo) -> taskOne.getDate().compareTo(taskTwo.getDate()));
-        return taskList;
     }
 }

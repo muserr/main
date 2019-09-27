@@ -5,6 +5,7 @@ import duchess.model.Schedule;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public abstract class Task implements Serializable {
     private boolean isDone;
@@ -28,5 +29,5 @@ public abstract class Task implements Serializable {
 
     public abstract void snooze() throws DukeException;
 
-    public abstract Date getDate();
+    public abstract List<Task> getReminders();
 }

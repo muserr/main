@@ -5,6 +5,7 @@ import duchess.model.Schedule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -92,6 +93,11 @@ public class Event extends Task {
     }
 
     @Override
+    public List<Task> getReminders() {
+        return new ArrayList<>();
+    }
+
+    @Override
     public String toString() {
         return String.format("[E]%s %s (at: %s to %s)", super.toString(), this.description,
                 formatter.format(this.start), formatter.format(this.end));
@@ -106,10 +112,5 @@ public class Event extends Task {
             return new Schedule(start, String.format("[E]%s %s", super.toString(), this.description));
         }
         return null;
-    }
-
-    @Override
-    public Date getDate() {
-        return this.end;
     }
 }
