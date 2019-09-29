@@ -55,9 +55,9 @@ public class ViewScheduleCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
-        for (Task t : taskList.getTasks()) {
-            TimeFrame tempSchedule = t.getTimeFrame(start, end);
-            if (tempSchedule != null) {
+        for (Task task : taskList.getTasks()) {
+            TimeFrame tempSchedule = task.getTimeFrame(start, end);
+            if (tempSchedule.getEmptyTimeFrame() != true) {
                 (this.schedules).add(tempSchedule);
             }
         }

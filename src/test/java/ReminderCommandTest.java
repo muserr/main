@@ -50,6 +50,5 @@ public class ReminderCommandTest {
         addDeadlineCommand.execute(taskList, ui, storage);
 
         assertTrue(taskList.getTasks().size() == 2);
-        ReminderCommand reminderCommand = new ReminderCommand();
     }
 }

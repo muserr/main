@@ -36,7 +36,7 @@ public class Todo extends Task {
 
     @Override
     public TimeFrame getTimeFrame(Date startDate, Date endDate) {
-        return null;
+        return new TimeFrame();
     }
 
     @Override

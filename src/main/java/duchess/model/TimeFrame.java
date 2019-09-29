@@ -7,6 +7,14 @@ public class TimeFrame implements Comparable<TimeFrame> {
     private Date time;
     private String task;
     private boolean isOngoing;
+    private boolean isEmptyTimeFrame;
+
+    /**
+     * Constructor for empty schedules.
+     */
+    public TimeFrame() {
+        this.isEmptyTimeFrame = true;
+    }
 
     /**
      * Constructor for schedule.
@@ -18,6 +26,7 @@ public class TimeFrame implements Comparable<TimeFrame> {
         this.time = time;
         this.task = toString;
         this.isOngoing = false;
+        this.isEmptyTimeFrame = false;
     }
 
     /**
@@ -31,6 +40,7 @@ public class TimeFrame implements Comparable<TimeFrame> {
         this.time = time;
         this.task = toString;
         this.isOngoing = ongoing;
+        this.isEmptyTimeFrame = false;
     }
 
     public Date getStart() {
@@ -54,6 +64,10 @@ public class TimeFrame implements Comparable<TimeFrame> {
 
     public boolean getOngoing() {
         return isOngoing;
+    }
+
+    public boolean getEmptyTimeFrame() {
+        return isEmptyTimeFrame;
     }
 
     @Override

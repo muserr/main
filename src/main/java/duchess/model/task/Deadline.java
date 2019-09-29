@@ -78,7 +78,7 @@ public class Deadline extends Task {
         if (deadline.compareTo(startDate) >= 0 && deadline.compareTo(endDate) <= 0) {
             return new TimeFrame(deadline, String.format("[D]%s %s", super.toString(), this.description));
         }
-        return null;
+        return new TimeFrame();
     }
 
 }

@@ -119,6 +119,6 @@ public class Event extends Task {
         } else if (start.compareTo(startDate) >= 0 && start.compareTo(endDate) <= 0) { // starts during date
             return new TimeFrame(start, String.format("[E]%s %s", super.toString(), this.description));
         }
-        return null;
+        return new TimeFrame();
     }
 }
