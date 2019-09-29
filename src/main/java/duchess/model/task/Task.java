@@ -1,7 +1,7 @@
 package duchess.model.task;
 
 import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.Schedule;
+import duchess.model.TimeFrame;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,9 +25,13 @@ public abstract class Task implements Serializable {
         return "[" + (this.isDone ? "✓" : "✘") + "]";
     }
 
-    public abstract Schedule isWithinTimeFrame(Date startDate, Date endDate);
+    public abstract TimeFrame getTimeFrame(Date startDate, Date endDate);
 
     public abstract void snooze() throws DukeException;
 
     public abstract List<Task> getReminders();
+
+    public abstract List<Task> getClashables();
+
+    public abstract boolean clashesWith(Task task);
 }

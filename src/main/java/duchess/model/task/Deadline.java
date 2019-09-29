@@ -1,7 +1,7 @@
 package duchess.model.task;
 
 import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.Schedule;
+import duchess.model.TimeFrame;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,15 +59,26 @@ public class Deadline extends Task {
     }
 
     @Override
+    public List<Task> getClashables() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean clashesWith(Task task) {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("[D]%s %s (by: %s)", super.toString(), this.description, formatter.format(this.deadline));
     }
 
     @Override
-    public Schedule isWithinTimeFrame(Date startDate, Date endDate) {
+    public TimeFrame getTimeFrame(Date startDate, Date endDate) {
         if (deadline.compareTo(startDate) >= 0 && deadline.compareTo(endDate) <= 0) {
-            return new Schedule(deadline, String.format("[D]%s %s", super.toString(), this.description));
+            return new TimeFrame(deadline, String.format("[D]%s %s", super.toString(), this.description));
         }
         return null;
     }
+
 }
