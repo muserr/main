@@ -1,5 +1,6 @@
 package duchess.logic.commands;
 
+import duchess.model.TimeFrame;
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.task.Task;
@@ -7,6 +8,7 @@ import duchess.model.task.TaskList;
 import duchess.ui.Ui;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,7 @@ public class ReminderCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         List<Task> reminderList = addDeadlines(taskList);
+        reminderList = sortDeadlines(reminderList);
         display(reminderList, ui);
     }
 
@@ -52,4 +55,16 @@ public class ReminderCommand extends Command {
             ui.showDeadlines(reminderList);
         }
     }
+
+    /**
+     * Sorts deadlines in ascending order.
+     *
+     * @param reminderList list of reminders
+     * @return sorted list of reminders in ascending order
+     */
+    private List<Task> sortDeadlines(List<Task> reminderList) {
+        Collections.sort(reminderList, (Task thisTask, Task thatTask) -> thisTask.compareTo(thatTask));
+        return reminderList;
+    }
+
 }
