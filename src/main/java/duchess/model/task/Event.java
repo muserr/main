@@ -83,7 +83,9 @@ public class Event extends Task {
 
     @Override
     public List<Task> getReminders() {
-        return new ArrayList<>();
+        List<Task> list = new ArrayList<>();
+        list.add(this);
+        return list;
     }
 
     @Override
