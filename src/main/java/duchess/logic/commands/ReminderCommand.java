@@ -1,9 +1,9 @@
 package duchess.logic.commands;
 
-import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.task.Task;
 import duchess.model.task.TaskList;
+import duchess.storage.Storage;
 import duchess.ui.Ui;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class ReminderCommand extends Command {
      */
     private List<Task> addTimedActivities(TaskList taskList) {
         return taskList.getTasks().stream()
-                .map(task -> task.getReminders())
+                .map(Task::getReminders)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

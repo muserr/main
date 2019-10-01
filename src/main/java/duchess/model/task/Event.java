@@ -1,5 +1,8 @@
 package duchess.model.task;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.TimeFrame;
 
@@ -14,7 +17,6 @@ public class Event extends Task {
     private String description;
     private Date end;
     private Date start;
-    private SimpleDateFormat formatter;
 
     /**
      * Create an event task from user input.
@@ -28,7 +30,7 @@ public class Event extends Task {
             throw new DukeException("Format for event: event <event> /at <start datetime> to <end datetime>");
         }
 
-        formatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
         formatter.setLenient(false);
 
         try {
@@ -45,22 +47,6 @@ public class Event extends Task {
         } catch (ParseException e) {
             throw new DukeException("Invalid datetime. Correct format: dd/mm/yyyy hhmm");
         }
-    }
-
-    private boolean startClashes(Event event) {
-        return event.start.after(this.start) && event.start.before(this.end);
-    }
-
-    private boolean endClashes(Event event) {
-        return event.end.after(this.start) && event.end.before(this.end);
-    }
-
-    private boolean entireEventClashes(Event event) {
-        return event.start.before(this.start) && event.end.after(this.start);
-    }
-
-    private boolean isStartOrEndEqual(Event event) {
-        return event.start.equals(this.start) || event.end.equals(this.end);
     }
 
     @Override
@@ -88,14 +74,48 @@ public class Event extends Task {
         return list;
     }
 
-    @Override
-    public String toString() {
-        return String.format("[E]%s %s (at: %s to %s)", super.toString(), this.description,
-                formatter.format(this.start), formatter.format(this.end));
+    /**
+     * Constructor for Jackson.
+     *
+     * @param description description
+     * @param start       start time
+     * @param end         end time
+     */
+    @JsonCreator
+    public Event(
+            @JsonProperty("description") String description,
+            @JsonProperty("start") Date start,
+            @JsonProperty("end") Date end
+    ) {
+        this.description = description;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public TimeFrame getTimeFrame() {
         return new TimeFrame(this.start, this.end);
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
+        return String.format("[E]%s %s (at: %s to %s)", super.toString(), this.description,
+                formatter.format(this.start), formatter.format(this.end));
+    }
+
+    @JsonGetter("description")
+    public String getDescription() {
+        return description;
+    }
+
+    @JsonGetter("end")
+    public Date getEnd() {
+        return end;
+    }
+
+    @JsonGetter("start")
+    public Date getStart() {
+        return start;
     }
 }
