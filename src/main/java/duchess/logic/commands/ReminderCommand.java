@@ -1,6 +1,5 @@
 package duchess.logic.commands;
 
-import duchess.model.TimeFrame;
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.task.Task;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 public class ReminderCommand extends Command {
 
     /**
-     * Displays Deadline objects to user.
+     * Displays Deadline objects to user in ascending order.
      *
      * @param taskList List containing tasks
      * @param ui Userinterface object
@@ -27,18 +26,18 @@ public class ReminderCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
-        List<Task> reminderList = addDeadlines(taskList);
-        reminderList = sortDeadlines(reminderList);
+        List<Task> reminderList = addTimedActivities(taskList);
+        Collections.sort(reminderList);
         display(reminderList, ui);
     }
 
     /**
      * Returns a List of Task objects.
-     * Adds objects of type Deadline to reminderList.
+     * Adds objects of type Deadline and Event to reminderList.
      *
      * @param taskList of user inputs
      */
-    private List<Task> addDeadlines(TaskList taskList) {
+    private List<Task> addTimedActivities(TaskList taskList) {
         return taskList.getTasks().stream()
                 .map(task -> task.getReminders())
                 .flatMap(Collection::stream)
@@ -55,16 +54,4 @@ public class ReminderCommand extends Command {
             ui.showDeadlines(reminderList);
         }
     }
-
-    /**
-     * Sorts deadlines in ascending order.
-     *
-     * @param reminderList list of reminders
-     * @return sorted list of reminders in ascending order
-     */
-    private List<Task> sortDeadlines(List<Task> reminderList) {
-        Collections.sort(reminderList, (Task thisTask, Task thatTask) -> thisTask.compareTo(thatTask));
-        return reminderList;
-    }
-
 }
