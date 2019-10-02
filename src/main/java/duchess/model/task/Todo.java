@@ -15,7 +15,6 @@ public class Todo extends Task {
      * @throws DukeException the error if user input is invalid
      */
     public Todo(List<String> input) throws DukeException {
-        this.description = String.join(" ", input);
         if (input.size() == 0) {
             throw new DukeException("Format for todo: todo <task>");
         }
