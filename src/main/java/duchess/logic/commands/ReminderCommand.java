@@ -1,15 +1,14 @@
 package duchess.logic.commands;
 
-import duchess.model.TimeFrame;
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.task.Task;
-import duchess.model.task.TaskList;
+import duchess.storage.Store;
 import duchess.ui.Ui;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -18,30 +17,30 @@ import java.util.stream.Collectors;
 public class ReminderCommand extends Command {
 
     /**
-     * Displays Deadline objects to user.
+     * Displays Deadline objects to user in ascending order.
      *
-     * @param taskList List containing tasks
+     * @param store List containing tasks
      * @param ui Userinterface object
      * @param storage Storage object
      * @throws DukeException Exception thrown when storage not found
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
-        List<Task> reminderList = addDeadlines(taskList);
-        reminderList = sortDeadlines(reminderList);
+    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+        List<Task> reminderList = addTimedActivities(store.getTaskList());
+        Collections.sort(reminderList);
         display(reminderList, ui);
     }
 
     /**
      * Returns a List of Task objects.
-     * Adds objects of type Deadline to reminderList.
+     * Adds objects of type Deadline and Event to reminderList.
      *
-     * @param taskList of user inputs
+     * @param tasks list of tasks
      */
-    private List<Task> addDeadlines(TaskList taskList) {
-        return taskList.getTasks().stream()
-                .map(task -> task.getReminders())
-                .flatMap(Collection::stream)
+    private List<Task> addTimedActivities(List<Task> tasks) {
+        return tasks.stream()
+                .map(Task::getReminder)
+                .flatMap(Optional::stream)
                 .collect(Collectors.toList());
     }
 
@@ -55,16 +54,4 @@ public class ReminderCommand extends Command {
             ui.showDeadlines(reminderList);
         }
     }
-
-    /**
-     * Sorts deadlines in ascending order.
-     *
-     * @param reminderList list of reminders
-     * @return sorted list of reminders in ascending order
-     */
-    private List<Task> sortDeadlines(List<Task> reminderList) {
-        Collections.sort(reminderList, (Task thisTask, Task thatTask) -> thisTask.compareTo(thatTask));
-        return reminderList;
-    }
-
 }

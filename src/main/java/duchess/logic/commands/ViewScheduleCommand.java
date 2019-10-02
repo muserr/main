@@ -5,12 +5,14 @@ import duchess.model.TimeFrame;
 import duchess.model.task.Task;
 import duchess.model.task.TaskList;
 import duchess.storage.Storage;
+import duchess.storage.Store;
 import duchess.ui.Ui;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,38 +29,38 @@ public class ViewScheduleCommand extends Command {
     public ViewScheduleCommand(List<String> words) throws DukeException {
         this.words = words;
 
-        Date start = processDate(" 0000");
-        Date end = processDate(" 2359");
+        LocalDateTime start = processDate(" 0000");
+        LocalDateTime end = processDate(" 2359");
         this.timeFrame = new TimeFrame(start, end);
     }
 
     /**
-     * Creates Date object from string input in dd/MM/yyyy HHmm.
+     * Creates LocalDateTime object from string input in dd/MM/yyyy HHmm.
      *
-     * @return Date
+     * @return The LocalDateTime instance
      * @throws DukeException Exception thrown for invalid or missing date time
      */
-    private Date processDate(String time) throws DukeException {
+    private LocalDateTime processDate(String time) throws DukeException {
         try {
             int index = words.indexOf("/for");
             if (index == -1) {
                 throw new DukeException("Format for viewing schedule: schedule /for <date>");
             }
             String dateString = words.get(index + 1) + time;
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HHmm");
-            formatter.setLenient(false);
-            return formatter.parse(dateString);
-        } catch (ParseException e) {
-            throw new DukeException("Invalid datetime. Correct format: dd/mm/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm")
+                    .withResolverStyle(ResolverStyle.STRICT);
+            return LocalDateTime.parse(dateString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new DukeException("Invalid datetime. Correct format: dd/mm/yyyy hhmm");
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("Format for viewing schedule: schedule /for <date>");
         }
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
         List<Task> tasksForToday =
-                taskList.getTasks().stream()
+                store.getTaskList().stream()
                         .filter(task -> task.getTimeFrame().fallsWithin(this.timeFrame))
                         .collect(Collectors.toList());
 

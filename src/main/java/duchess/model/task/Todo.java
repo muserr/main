@@ -1,14 +1,13 @@
 package duchess.model.task;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.TimeFrame;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Todo extends Task {
-    private String description;
-
     /**
      * Creates a todo task from given user input.
      *
@@ -17,15 +16,11 @@ public class Todo extends Task {
      */
     public Todo(List<String> input) throws DukeException {
         this.description = String.join(" ", input);
-
         if (input.size() == 0) {
             throw new DukeException("Format for todo: todo <task>");
         }
-    }
 
-    @Override
-    public boolean containsKeyword(String keyword) {
-        return this.description.contains(keyword);
+        this.description = String.join(" ", input);
     }
 
     @Override
@@ -44,7 +39,11 @@ public class Todo extends Task {
     }
 
     @Override
-    public List<Task> getReminders() {
-        return new ArrayList<>();
+    public Optional<Task> getReminder() {
+        return Optional.empty();
+    }
+
+    @JsonCreator
+    public Todo() {
     }
 }
