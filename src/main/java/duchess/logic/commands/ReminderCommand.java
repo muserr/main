@@ -1,6 +1,7 @@
 package duchess.logic.commands;
 
 import duchess.logic.commands.exceptions.DukeException;
+import duchess.model.task.DuchessLog;
 import duchess.model.task.Task;
 import duchess.storage.Storage;
 import duchess.storage.Store;
@@ -22,10 +23,11 @@ public class ReminderCommand extends Command {
      * @param store List containing tasks
      * @param ui Userinterface object
      * @param storage Storage object
+     * @param duchessLog DuchessLog object
      * @throws DukeException Exception thrown when storage not found
      */
     @Override
-    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
         List<Task> reminderList = addTimedActivities(store.getTaskList());
         Collections.sort(reminderList);
         display(reminderList, ui);

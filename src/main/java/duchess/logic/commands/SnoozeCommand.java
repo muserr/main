@@ -1,9 +1,9 @@
 package duchess.logic.commands;
 
+import duchess.model.task.DuchessLog;
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.task.Task;
-import duchess.model.task.TaskList;
 import duchess.storage.Store;
 import duchess.ui.Ui;
 
@@ -17,7 +17,7 @@ public class SnoozeCommand extends Command {
     }
 
     @Override
-    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
         try {
             int taskNo = Integer.parseInt(words.get(0)) - 1;
             Task task = store.getTaskList().get(taskNo);

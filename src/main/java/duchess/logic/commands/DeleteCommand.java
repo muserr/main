@@ -1,7 +1,7 @@
 package duchess.logic.commands;
 
+import duchess.model.task.DuchessLog;
 import duchess.storage.Storage;
-import duchess.model.task.TaskList;
 import duchess.model.task.Task;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.storage.Store;
@@ -22,10 +22,11 @@ public class DeleteCommand extends Command {
      * @param store the store
      * @param ui Userinterface object
      * @param storage Storage object
+     * @param duchessLog Log object
      * @throws DukeException Exception thrown when errors besides invalid format and index are found
      */
     @Override
-    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
         try {
             int taskNo = Integer.parseInt(words.get(0)) - 1;
             Task toRemove = store.getTaskList().get(taskNo);

@@ -2,8 +2,8 @@ package duchess.logic.commands;
 
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.model.TimeFrame;
+import duchess.model.task.DuchessLog;
 import duchess.model.task.Task;
-import duchess.model.task.TaskList;
 import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;
@@ -58,7 +58,7 @@ public class ViewScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
         List<Task> tasksForToday =
                 store.getTaskList().stream()
                         .filter(task -> task.getTimeFrame().fallsWithin(this.timeFrame))

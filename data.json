@@ -1,1 +1,4 @@
-["duchess.model.task.TaskList",{"tasks":["java.util.ArrayList",[]]}]
+[ "duchess.storage.Store", {
+  "taskList" : [ "java.util.ArrayList", [ ] ],
+  "moduleList" : [ "java.util.ArrayList", [ ] ]
+} ]
