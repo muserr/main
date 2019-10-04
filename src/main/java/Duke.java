@@ -5,7 +5,6 @@ import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;
 import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.task.TaskList;
 
 public class Duke {
 
@@ -45,7 +44,7 @@ public class Duke {
                 duchessLog.add(fullCommand);
                 ui.beginBlock();
                 Command c = Parser.parse(fullCommand);
-                c.execute(store, ui, storage, duchessLog);
+                c.execute(store, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {
                 ui.showError(e.getMessage());

@@ -12,7 +12,7 @@ import duchess.ui.Ui;
 public class LogCommand extends Command {
 
     @Override
-    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
-        ui.showUserHistory(duchessLog.getLog());
+    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
+        ui.showUserHistory(DuchessLog.getLog());
     }
 }

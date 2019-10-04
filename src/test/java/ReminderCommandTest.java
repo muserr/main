@@ -44,13 +44,13 @@ public class ReminderCommandTest {
         // Adding the firstDeadline
         List<String> firstWords = Arrays.asList(firstDeadline.split(" "));
         AddDeadlineCommand addDeadlineCommand = new AddDeadlineCommand(firstWords);
-        addDeadlineCommand.execute(store, ui, storage, duchessLog);
+        addDeadlineCommand.execute(store, ui, storage);
 
 
         // Adding the firstDeadline
         List<String> secondWords = Arrays.asList(firstDeadline.split(" "));
         addDeadlineCommand = new AddDeadlineCommand(secondWords);
-        addDeadlineCommand.execute(store, ui, storage, duchessLog);
+        addDeadlineCommand.execute(store, ui, storage);
 
         assertTrue(store.getTaskList().size() == 2);
         ReminderCommand reminderCommand = new ReminderCommand();

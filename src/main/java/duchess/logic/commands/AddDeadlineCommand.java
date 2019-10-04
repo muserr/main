@@ -1,6 +1,5 @@
 package duchess.logic.commands;
 
-import duchess.model.task.DuchessLog;
 import duchess.storage.Storage;
 import duchess.model.task.Task;
 import duchess.model.task.Deadline;
@@ -19,7 +18,7 @@ public class AddDeadlineCommand extends Command {
     }
 
     @Override
-    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
         Task task = new Deadline(words.subList(0, words.size()));
         store.getTaskList().add(task);
         ui.showTaskAdded(store.getTaskList(), task);

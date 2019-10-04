@@ -1,6 +1,5 @@
 package duchess.logic.commands;
 
-import duchess.model.task.DuchessLog;
 import duchess.storage.Storage;
 import duchess.logic.commands.exceptions.DukeException;
 import duchess.storage.Store;
@@ -13,11 +12,10 @@ public class ByeCommand extends Command {
      * @param store the store
      * @param ui Userinterface object
      * @param storage Storage object
-     * @param duchessLog Log object
      * @throws DukeException Exception thrown when storage not found
      */
     @Override
-    public void execute(Store store, Ui ui, Storage storage, DuchessLog duchessLog) throws DukeException {
+    public void execute(Store store, Ui ui, Storage storage) throws DukeException {
         this.isExit = true;
         ui.showBye();
     }

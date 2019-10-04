@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DuchessLog {
-    private List<String> log;
+    private static List<String> duchessLog;
 
     public DuchessLog() {
-        this.log = new ArrayList<>();
+        duchessLog = new ArrayList<>();
     }
 
     public void add(String input) {
-        this.log.add(input);
+        duchessLog.add(input);
     }
 
-    public List<String> getLog() {
-        return this.log;
+    public static List<String> getLog() {
+        return duchessLog;
     }
 }

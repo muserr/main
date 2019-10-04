@@ -1,4 +1,3 @@
 [ "duchess.storage.Store", {
-  "taskList" : [ "java.util.ArrayList", [ ] ],
-  "moduleList" : [ "java.util.ArrayList", [ ] ]
-} ]
+  "taskList" : [ "java.util.ArrayList", [ [ "duchess.model.task.Todo", {
+    "description" : "work"
