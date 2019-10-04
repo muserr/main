@@ -44,6 +44,7 @@ public class Duke {
                 duchessLog.add(fullCommand);
                 ui.beginBlock();
                 Command c = Parser.parse(fullCommand);
+                duchessLog.addValidCommands(c);
                 c.execute(store, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {
@@ -57,5 +58,4 @@ public class Duke {
     public static void main(String[] args) {
         new Duke("data.json").run();
     }
-
 }
