@@ -251,6 +251,10 @@ public class Ui {
         }
     }
 
+    public void showUndo() {
+        printIndented("The last command has been undone.");
+    }
+
     /**
      * Prints a straight line.
      */
