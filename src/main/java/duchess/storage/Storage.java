@@ -1,6 +1,5 @@
 package duchess.storage;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,7 +12,7 @@ import java.util.Stack;
 
 public class Storage {
     private String fileName;
-    private Stack<String> undoStack = new Stack<>();
+    private static Stack<Store> undoStack = new Stack<>();
 
     public Storage(String fileName) {
         this.fileName = fileName;
@@ -63,31 +62,23 @@ public class Storage {
                 .enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public Stack<String> getUndoStack() {
+    public static Stack<Store> getUndoStack() {
         return undoStack;
     }
 
-    public void setUndoStack(Stack<String> undoStack) {
-        this.undoStack = undoStack;
+    // Saving Store as JSON.
+    public static void addToUndoStackPush(Store store) throws DuchessException {
+        undoStack.push(store);
     }
 
-    public void stackLoad() {
-        if (this.undoStack.size() > 0);
-            String prevStoreJSON = getUndoStack().peek();
-            getUndoStack().pop();
-            ObjectMapper mapper = new ObjectMapper();
-
-            try {
-                // Deserializing
-                Store newStore = mapper.readValue(prevStoreJSON, Store.class);
-                store.setTaskList(newStore.getTaskList());
-                store.setModuleList(newStore.getModuleList());
-            } catch(JsonParseException e) {
-                throw new DuchessException("JSON parsing issue");
-            } catch(IOException e) {
-                throw new DuchessException("Stack input error");
-            }
+    // Converting Store to JSON.
+    public void storeToJSON(Store store) throws DuchessException {
+        try {
+            FileOutputStream fileStream = new FileOutputStream(this.fileName);
+            getObjectMapper().writeValue(fileStream, store);
+            fileStream.close();
+        } catch (IOException e) {
+            throw new DuchessException("An unexpected error occurred when writing to the file. " + e);
         }
-
     }
 }

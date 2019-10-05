@@ -13,6 +13,4 @@ public abstract class Command {
     }
 
     public abstract void execute(Store store, Ui ui, Storage storage) throws DuchessException;
-
-    public void takeSnapshot(Store store)
 }

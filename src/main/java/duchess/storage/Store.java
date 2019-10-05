@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
-    private static List<Task> taskList;
-    private static List<Module> moduleList;
+    private List<Task> taskList;
+    private List<Module> moduleList;
 
     public Store() {
         this.taskList = new ArrayList<>();
