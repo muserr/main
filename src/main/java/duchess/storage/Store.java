@@ -7,14 +7,17 @@ import duchess.model.Module;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Store {
     private List<Task> taskList;
     private List<Module> moduleList;
+    private Stack<String> undoStack;
 
     public Store() {
         this.taskList = new ArrayList<>();
         this.moduleList = new ArrayList<>();
+        this.undoStack = new Stack<>();
     }
 
     public boolean isClashing(Task newTask) {
@@ -40,5 +43,15 @@ public class Store {
     @JsonSetter("moduleList")
     public void setModuleList(List<Module> moduleList) {
         this.moduleList = moduleList;
+    }
+
+    @JsonGetter("undoStack")
+    public Stack<String> getUndoStack() {
+        return undoStack;
+    }
+
+    @JsonSetter("undoStack")
+    public void setUndoStack(Stack<String> undoStack) {
+        this.undoStack = undoStack;
     }
 }
