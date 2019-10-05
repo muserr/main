@@ -1,12 +1,10 @@
 package duchess.storage;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.task.TaskList;
+import duchess.exceptions.DukeException;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +30,6 @@ public class Storage {
             fileStream.close();
             return store;
         } catch (IOException | ClassCastException e) {
-            System.err.println(e);
             throw new DukeException("Unable to read file, continuing with empty list.");
         }
     }

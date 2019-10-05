@@ -1,8 +1,8 @@
 
 package duchess.ui;
 
-import duchess.logic.commands.Command;
 import duchess.model.task.Task;
+import duchess.model.Module;
 
 import java.util.List;
 import java.util.Scanner;
@@ -61,6 +61,19 @@ public class Ui {
     }
 
     /**
+     * Displays the newly added module as well as other modules.
+     *
+     * @param module newly added module
+     * @param modules existing modules
+     */
+    public void showModuleAdded(Module module, List<Module> modules) {
+        printIndented("I've added this module:");
+        printIndented("  " + module);
+        printIndented("Here are all your modules:");
+        showModules(modules);
+    }
+
+    /**
      * Prints the task that was added.
      *
      * @param tasks List of all tasks
@@ -83,6 +96,22 @@ public class Ui {
     }
 
     /**
+     * Displays the user's modules.
+     *
+     * @param modules list of modules
+     */
+    public void showModuleList(List<Module> modules) {
+        if (modules.size() == 0) {
+            printIndented("You've no modules.");
+            printIndented("You can add modules using the `add module` command.");
+            return;
+        }
+
+        printIndented("Here are your modules:");
+        showModules(modules);
+    }
+
+    /**
      * Displays search results to user.
      *
      * @param tasks List containing tasks from user
@@ -95,9 +124,8 @@ public class Ui {
     /**
      * Displays schedule of a single day to user.
      * Informs user if there are ongoing events.
-     *
      * @param tasks List of tasks to show
-     * @param date  Date of choice
+     * @param date  Date
      */
     public void showScheduleResult(List<Task> tasks, String date) {
         printIndented("Here is your schedule for " + date + ":");
@@ -178,6 +206,18 @@ public class Ui {
         int counter = 1;
         for (Task task : tasks) {
             printIndented(counter++ + ". " + task);
+        }
+    }
+
+    /**
+     * Displays modules in a list.
+     *
+     * @param modules list containing modules
+     */
+    private void showModules(List<Module> modules) {
+        int counter = 1;
+        for (Module module : modules) {
+            printIndented(counter++ + ". " + module);
         }
     }
 

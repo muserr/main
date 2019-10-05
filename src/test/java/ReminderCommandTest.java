@@ -1,12 +1,11 @@
 import duchess.logic.commands.AddDeadlineCommand;
 import duchess.logic.commands.ReminderCommand;
+import duchess.exceptions.DukeException;
 import duchess.logic.parser.Parser;
 import duchess.model.task.DuchessLog;
 import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;
-import duchess.logic.commands.exceptions.DukeException;
-import duchess.model.task.TaskList;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -19,14 +18,15 @@ public class ReminderCommandTest {
     @Test
     public void testExecuteWithoutDeadlines() throws DukeException {
         String filename = "text_file";
-        TaskList taskList = new TaskList();
+        Store store = new Store();
         Ui ui = new Ui();
         Storage storage = new Storage(filename);
 
-        assertTrue(taskList.getTasks().size() == 0);
+        assertTrue(store.getTaskList().size() == 0);
         ReminderCommand reminderCommand = new ReminderCommand();
+        reminderCommand.execute(store, ui, storage);
 
-        assertTrue(taskList.getTasks().size() == 0);
+        assertTrue(store.getTaskList().size() == 0);
     }
 
     @Test
