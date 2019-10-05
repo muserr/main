@@ -14,6 +14,7 @@ import duchess.logic.commands.ListTasksCommand;
 import duchess.logic.commands.LogCommand;
 import duchess.logic.commands.ReminderCommand;
 import duchess.logic.commands.SnoozeCommand;
+import duchess.logic.commands.UndoCommand;
 import duchess.logic.commands.ViewScheduleCommand;
 import duchess.exceptions.DukeException;
 
@@ -84,6 +85,8 @@ public class Parser {
             return new ByeCommand();
         case "log":
             return new LogCommand();
+        case "undo":
+            return new UndoCommand();
         default:
             throw new DukeException("Please enter a valid command.");
         }
