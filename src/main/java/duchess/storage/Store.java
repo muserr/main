@@ -41,5 +41,4 @@ public class Store {
     public void setModuleList(List<Module> moduleList) {
         this.moduleList = moduleList;
     }
-
 }

@@ -1,6 +1,5 @@
 package duchess.logic.commands;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import duchess.exceptions.DuchessException;
 import duchess.storage.Storage;
 import duchess.storage.Store;
@@ -16,14 +15,11 @@ public class UndoCommand extends Command {
         if (storage.getUndoStack().size() > 0) {
             // You obtain Store data from storage Stack
             Store prevStoreJSON = storage.getUndoStack().peek();
-
             Storage.getUndoStack().pop();
-            ObjectMapper mapper = new ObjectMapper();
 
             // Serialize store to data.json
             // Write to JSON DATA:
             storage.save(prevStoreJSON);
-
 
             // you are getting store from stack
             Store newStore = storage.load();

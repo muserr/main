@@ -12,10 +12,11 @@ import java.util.Stack;
 
 public class Storage {
     private String fileName;
-    private static Stack<Store> undoStack = new Stack<>();
+    private static Stack<Store> undoStack;
 
     public Storage(String fileName) {
         this.fileName = fileName;
+        undoStack = new Stack<>();
     }
 
     // Unchecked type coercion is necessary here.
@@ -72,13 +73,13 @@ public class Storage {
     }
 
     // Converting Store to JSON.
-    public void storeToJSON(Store store) throws DuchessException {
-        try {
-            FileOutputStream fileStream = new FileOutputStream(this.fileName);
-            getObjectMapper().writeValue(fileStream, store);
-            fileStream.close();
-        } catch (IOException e) {
-            throw new DuchessException("An unexpected error occurred when writing to the file. " + e);
-        }
-    }
+    // public void storeToJSON(Store store) throws DuchessException {
+    //     try {
+    //         FileOutputStream fileStream = new FileOutputStream(this.fileName);
+    //         getObjectMapper().writeValue(fileStream, store);
+    //         fileStream.close();
+    //     } catch (IOException e) {
+    //         throw new DuchessException("An unexpected error occurred when writing to the file. " + e);
+    //     }
+    // }
 }
