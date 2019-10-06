@@ -12,6 +12,8 @@ import duchess.exceptions.DuchessException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 public class Storage {
@@ -92,13 +94,22 @@ public class Storage {
     }
 
     // Saving Store as JSON.
-    public void addToUndoStackPush(Store store) throws DuchessException {
-        try {
-            String jsonVal = getObjectMapper().writeValueAsString(store);
-            undoStack.push(jsonVal);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new DuchessException("Undo stack push was unsuccessful.");
+    public void addToUndoStackPush(Store store, String userInput) throws DuchessException {
+        List<String> words = Arrays.asList(userInput.split(" "));
+        String keyword = words.get(0);
+
+        if(!keyword.equalsIgnoreCase("undo")) {
+            try {
+                String jsonVal = getObjectMapper().writeValueAsString(store);
+                undoStack.push(jsonVal);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                throw new DuchessException("Undo stack push was unsuccessful.");
+            }
         }
+    }
+
+    public Stack<String> getUndoStack() {
+        return this.undoStack;
     }
 }
