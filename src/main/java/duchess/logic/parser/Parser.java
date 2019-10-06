@@ -86,17 +86,7 @@ public class Parser {
         case "log":
             return new LogCommand();
         case "undo":
-            try {
-                String secondKeyword = words.get(1);
-                switch (secondKeyword) {
-                    case "module":
-                        return new AddModuleCommand(words.subList(2, words.size()));
-                    default:
-                        return new UndoCommand();
-                }
-            } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
-                throw new DuchessException("Usage: add module <module-code> <module-name>");
-            }
+            return new UndoCommand(arguments);
         default:
             throw new DuchessException("Please enter a valid command.");
         }

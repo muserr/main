@@ -11,31 +11,54 @@ public class UndoCommand extends Command {
     private int undoCounter;
 
     public UndoCommand(List<String> words) throws DuchessException {
-        if (words.size() < 2) {
-            throw new DuchessException("Usage: add modules <module code> <module name>");
+        if (words.size() == 1) {
+            undoCounter = Integer.parseInt(words.get(0));
+        } else if (words.size() == 0) {
+            undoCounter = 1;
+        } else {
+            throw new DuchessException("Usage: undo <number>");
         }
-
-        undoCounter = Integer.parseInt(words.get(0));
     }
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        ui.showUndo();
+        ui.showUndo(undoCounter);
 
-        // You obtain Store data from storage Stack
-        storage.getLastSnapshot();
-        Store prevStore = storage.getLastSnapshot();
+        while(undoCounter > 0) {
+            if (storage.getUndoStack().size() > 0) {
+                // You obtain Store data from storage Stack
+                storage.getLastSnapshot();
+                Store prevStore = storage.getLastSnapshot();
 
-        // Write to JSON DATA:
-        storage.save(prevStore);
+                // Write to JSON DATA:
+                storage.save(prevStore);
 
-        // you are getting store from stack
-        Store newStore = storage.load();
-        store.setTaskList(newStore.getTaskList());
-        store.setModuleList(newStore.getModuleList());
+                // you are getting store from stack
+                Store newStore = storage.load();
+                store.setTaskList(newStore.getTaskList());
+                store.setModuleList(newStore.getModuleList());
+
+                undoCounter--;
+            }
+            else {
+                undoCounter = 0;
+            }
+        }
     }
 
-    private void repeatUndoFor(int undoCounter) {
+    // private void repeatUndoFor(Store store, Ui ui, Storage storage, int counter) throws DuchessException {
+    //     while(storage.getUndoStack().size() > 0) {
+    //         // You obtain Store data from storage Stack
+    //         storage.getLastSnapshot();
+    //         Store prevStore = storage.getLastSnapshot();
 
-    }
+    //         // Write to JSON DATA:
+    //         storage.save(prevStore);
+
+    //         // you are getting store from stack
+    //         Store newStore = storage.load();
+    //         store.setTaskList(newStore.getTaskList());
+    //         store.setModuleList(newStore.getModuleList());
+    //     }
+    // }
 }

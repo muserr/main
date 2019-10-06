@@ -251,8 +251,12 @@ public class Ui {
         }
     }
 
-    public void showUndo() {
-        printIndented("The last command has been undone.");
+    public void showUndo(int undoCounter) {
+        if (undoCounter == 1) {
+            printIndented("The last command has been undone.");
+        } else {
+            printIndented("The last " + undoCounter + " commands have been undone.");
+        }
     }
 
     /**
