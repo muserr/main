@@ -12,7 +12,7 @@ import java.util.Stack;
 
 public class Storage {
     private String fileName;
-    private static Stack<Store> undoStack;
+    private Stack<Store> undoStack;
 
     public Storage(String fileName) {
         this.fileName = fileName;
@@ -63,14 +63,28 @@ public class Storage {
                 .enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public static Stack<Store> getUndoStack() {
+    public Stack<Store> getUndoStack() {
         return undoStack;
     }
 
     // Saving Store as JSON.
-    public static void addToUndoStackPush(Store store) throws DuchessException {
+    public void addToUndoStackPush(Store store) throws DuchessException {
         undoStack.push(store);
     }
+
+
+    // Convert to String
+    //public String saveJSON(Store store) throws DuchessException {
+    //    try {
+    //        String jsonOutput = "";
+    //        Store oldStore = getObjectMapper().readValue(store, Store.class);
+
+    //        getObjectMapper().writeValue(jsonOutput, store);
+    //        return jsonOutput;
+    //    } catch (IOException e) {
+    //        throw new DuchessException("An unexpected error occurred when writing to the file. " + e);
+    //    }
+    //}
 
     // Converting Store to JSON.
     // public void storeToJSON(Store store) throws DuchessException {

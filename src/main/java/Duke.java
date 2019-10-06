@@ -47,7 +47,7 @@ public class Duke {
                 duchessLog.addValidCommands(c);
 
                 // Take snapshot here, you save copies of Store store here
-                Storage.addToUndoStackPush(store);
+                storage.addToUndoStackPush(store);
 
                 c.execute(store, ui, storage);
                 isExit = c.isExit();

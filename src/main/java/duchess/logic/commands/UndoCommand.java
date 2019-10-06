@@ -15,9 +15,8 @@ public class UndoCommand extends Command {
         if (storage.getUndoStack().size() > 0) {
             // You obtain Store data from storage Stack
             Store prevStoreJSON = storage.getUndoStack().peek();
-            Storage.getUndoStack().pop();
+            storage.getUndoStack().pop();
 
-            // Serialize store to data.json
             // Write to JSON DATA:
             storage.save(prevStoreJSON);
 
