@@ -1,5 +1,9 @@
 package duchess.storage;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -12,7 +16,7 @@ import java.util.Stack;
 
 public class Storage {
     private String fileName;
-    private Stack<Store> undoStack;
+    private Stack<String> undoStack;
 
     public Storage(String fileName) {
         this.fileName = fileName;
@@ -60,16 +64,41 @@ public class Storage {
                         MapperFeature.AUTO_DETECT_FIELDS,
                         MapperFeature.AUTO_DETECT_GETTERS,
                         MapperFeature.AUTO_DETECT_IS_GETTERS)
-                .enable(SerializationFeature.INDENT_OUTPUT);
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public Stack<Store> getUndoStack() {
-        return undoStack;
+    public Store getLastSnapshot() throws DuchessException {
+        if (undoStack.size() == 0) {
+            throw new DuchessException("There's nothing to undo");
+        }
+
+        String jsonVal = undoStack.peek();
+        undoStack.pop();
+
+        try {
+            Store store = getObjectMapper().readValue(jsonVal, Store.class);
+            return store;
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+            throw new DuchessException("Bendetta");
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+            throw new DuchessException("Bench press");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DuchessException("Merecedes Benz");
+        }
     }
 
     // Saving Store as JSON.
     public void addToUndoStackPush(Store store) throws DuchessException {
-        undoStack.push(store);
+        try {
+            String jsonVal = getObjectMapper().writeValueAsString(store);
+            undoStack.push(jsonVal);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
 

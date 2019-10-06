@@ -11,20 +11,16 @@ public class UndoCommand extends Command {
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
         ui.showUndo();
 
-        // Undo time
-        if (storage.getUndoStack().size() > 0) {
-            // You obtain Store data from storage Stack
-            Store prevStoreJSON = storage.getUndoStack().peek();
-            storage.getUndoStack().pop();
+        // You obtain Store data from storage Stack
+        storage.getLastSnapshot();
+        Store prevStore = storage.getLastSnapshot();
 
-            // Write to JSON DATA:
-            storage.save(prevStoreJSON);
+        // Write to JSON DATA:
+        storage.save(prevStore);
 
-            // you are getting store from stack
-            Store newStore = storage.load();
-
-            store.setTaskList(newStore.getTaskList());
-            store.setModuleList(newStore.getModuleList());
-        }
+        // you are getting store from stack
+        Store newStore = storage.load();
+        store.setTaskList(newStore.getTaskList());
+        store.setModuleList(newStore.getModuleList());
     }
 }
