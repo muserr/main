@@ -12,19 +12,17 @@ import duchess.exceptions.DuchessException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
 
 public class Storage {
     private String fileName;
     private Stack<String> undoStack;
-    boolean isPrevUndo;
+    private boolean isPreviousUndo;
 
     public Storage(String fileName) {
         this.fileName = fileName;
         undoStack = new Stack<>();
-        isPrevUndo = false;
+        isPreviousUndo = false;
     }
 
     // Unchecked type coercion is necessary here.
@@ -96,9 +94,9 @@ public class Storage {
     }
 
     // Saving Store as JSON.
-    public void addToUndoStackPush(Store store, String userInput) throws DuchessException {
-        List<String> words = Arrays.asList(userInput.split(" "));
-        String keyword = words.get(0);
+    public void addToUndoStackPush(Store store) throws DuchessException {
+        //List<String> words = Arrays.asList(userInput.split(" "));
+        //String keyword = words.get(0);
 
         try {
             String jsonVal = getObjectMapper().writeValueAsString(store);
@@ -108,14 +106,21 @@ public class Storage {
             throw new DuchessException("Undo stack push was unsuccessful.");
         }
 
-        // if(!keyword.equalsIgnoreCase("undo")) {
-        //     isPrevUndo = false;
-        // } else {
-        //     isPrevUndo = true;
-        // }
     }
 
     public Stack<String> getUndoStack() {
         return this.undoStack;
+    }
+
+    public boolean getPreviousUndoStatus() {
+        return this.isPreviousUndo;
+    }
+
+    public void setPreviousUndoFalse() {
+        this.isPreviousUndo = false;
+    }
+
+    public void setPreviousUndoTrue() {
+        this.isPreviousUndo = true;
     }
 }

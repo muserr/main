@@ -16,45 +16,36 @@ public class UndoCommand extends Command {
         } else if (words.size() == 0) {
             undoCounter = 1;
         } else {
-            throw new DuchessException("Usage: undo <number>");
+            throw new DuchessException("Usage: undo [number]");
         }
     }
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
+        if(storage.getPreviousUndoStatus() == false) {
+            // Update boolean to prevent next command to be undo.
+            storage.setPreviousUndoTrue();
 
-        ui.showUndo(undoCounter);
-        System.out.println("Value of undoCounter = " + undoCounter);
+            // Perform undo function.
+            ui.showUndo(undoCounter);
+            System.out.println("Value of undoCounter = " + undoCounter);
 
-        if(undoCounter > 1) {
-            storage.getLastSnapshot();
+            if (undoCounter > 1) {
+                storage.getLastSnapshot();
 
-            while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
-                System.out.println("new undoCounter value = " + undoCounter);
+                while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
+                    System.out.println("new undoCounter value = " + undoCounter);
+                    getPreviousStore(store, storage);
+                    undoCounter--;
+                }
+            } else {
+                storage.getLastSnapshot();
                 getPreviousStore(store, storage);
-                undoCounter--;
             }
         } else {
-            storage.getLastSnapshot();
-            getPreviousStore(store, storage);
+            throw new DuchessException("Last command cannot be undo. Use redo instead.");
         }
     }
-
-    // private void repeatUndoFor(Store store, Ui ui, Storage storage, int counter) throws DuchessException {
-    //     while(storage.getUndoStack().size() > 0) {
-    //         // You obtain Store data from storage Stack
-    //         storage.getLastSnapshot();
-    //         Store prevStore = storage.getLastSnapshot();
-
-    //         // Write to JSON DATA:
-    //         storage.save(prevStore);
-
-    //         // you are getting store from stack
-    //         Store newStore = storage.load();
-    //         store.setTaskList(newStore.getTaskList());
-    //         store.setModuleList(newStore.getModuleList());
-    //     }
-    // }
 
     private void getPreviousStore(Store store, Storage storage) throws DuchessException {
         // You obtain Store data from storage Stack
