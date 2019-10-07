@@ -28,13 +28,11 @@ public class UndoCommand extends Command {
 
             // Perform undo function.
             ui.showUndo(undoCounter);
-            System.out.println("Value of undoCounter = " + undoCounter);
 
             if (undoCounter > 1) {
                 storage.getLastSnapshot();
 
                 while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
-                    System.out.println("new undoCounter value = " + undoCounter);
                     getPreviousStore(store, storage);
                     undoCounter--;
                 }
