@@ -50,9 +50,9 @@ public class Deadline extends Task {
 
     @JsonCreator
     public Deadline(
-            @JsonProperty("deadline") LocalDateTime deadline
+            @JsonProperty("deadline") String deadline
     ) {
-        this.deadline = deadline;
+        this.deadline = LocalDateTime.parse(deadline);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Deadline extends Task {
     }
 
     @JsonGetter("deadline")
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public String getDeadline() {
+        return deadline.toString();
     }
 }

@@ -72,11 +72,11 @@ public class Event extends Task {
      */
     @JsonCreator
     public Event(
-            @JsonProperty("start") LocalDateTime start,
-            @JsonProperty("end") LocalDateTime end
+            @JsonProperty("start") String start,
+            @JsonProperty("end") String end
     ) {
-        this.start = start;
-        this.end = end;
+        this.start = LocalDateTime.parse(start);
+        this.end = LocalDateTime.parse(end);
     }
 
     @Override
@@ -93,12 +93,12 @@ public class Event extends Task {
     }
 
     @JsonGetter("end")
-    public LocalDateTime getEnd() {
-        return end;
+    public String getEnd() {
+        return end.toString();
     }
 
     @JsonGetter("start")
-    public LocalDateTime getStart() {
-        return start;
+    public String getStart() {
+        return start.toString();
     }
 }
