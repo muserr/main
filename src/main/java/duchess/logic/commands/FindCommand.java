@@ -18,6 +18,8 @@ public class FindCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
+        storage.setPreviousUndoFalse();
+
         if (words.size() > 0) {
             String searchTerm = String.join(" ", words.subList(0, words.size()));
             List<Task> filteredTasks =

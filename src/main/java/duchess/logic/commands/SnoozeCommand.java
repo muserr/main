@@ -17,6 +17,7 @@ public class SnoozeCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
+        storage.setPreviousUndoFalse();
         try {
             int taskNo = Integer.parseInt(words.get(0)) - 1;
             Task task = store.getTaskList().get(taskNo);
