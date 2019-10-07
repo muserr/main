@@ -251,6 +251,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Displays number of undone actions to user.
+     *
+     * @param undoCounter number of undo operations
+     */
     public void showUndo(int undoCounter) {
         if (undoCounter == 1) {
             printIndented("The last command has been undone.");

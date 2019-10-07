@@ -19,6 +19,11 @@ public class Storage {
     private Stack<String> undoStack;
     private boolean isPreviousUndo;
 
+    /**
+     * Constructs Storage object.
+     *
+     * @param fileName filename for storage
+     */
     public Storage(String fileName) {
         this.fileName = fileName;
         undoStack = new Stack<>();
@@ -70,6 +75,12 @@ public class Storage {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
+    /**
+     * Obtains last Store object.
+     *
+     * @return last Store object
+     * @throws DuchessException throws exception when unable to obtain Store object
+     */
     public Store getLastSnapshot() throws DuchessException {
         if (undoStack.size() == 0) {
             throw new DuchessException("There's nothing to undo");
@@ -93,10 +104,13 @@ public class Storage {
         }
     }
 
-    // Saving Store as JSON.
+    /**
+     * Adds Store object to stack.
+     *
+     * @param store current store object
+     * @throws DuchessException throws exception when unable to push object to stack
+     */
     public void addToUndoStackPush(Store store) throws DuchessException {
-        //List<String> words = Arrays.asList(userInput.split(" "));
-        //String keyword = words.get(0);
 
         try {
             String jsonVal = getObjectMapper().writeValueAsString(store);
