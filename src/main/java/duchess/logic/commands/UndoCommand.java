@@ -24,21 +24,20 @@ public class UndoCommand extends Command {
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
 
         ui.showUndo(undoCounter);
-        //while(undoCounter > 0 && storage.getUndoStack().size() > 0) {
-        // You obtain Store data from storage Stack
-        storage.getLastSnapshot();
-        Store prevStore = storage.getLastSnapshot();
+        System.out.println("Value of undoCounter = " + undoCounter);
 
-        // Write to JSON DATA:
-        storage.save(prevStore);
+        if(undoCounter > 1) {
+            storage.getLastSnapshot();
 
-        // you are getting store from stack
-        Store newStore = storage.load();
-        store.setTaskList(newStore.getTaskList());
-        store.setModuleList(newStore.getModuleList());
-
-        undoCounter--;
-        //}
+            while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
+                System.out.println("new undoCounter value = " + undoCounter);
+                getPreviousStore(store, storage);
+                undoCounter--;
+            }
+        } else {
+            storage.getLastSnapshot();
+            getPreviousStore(store, storage);
+        }
     }
 
     // private void repeatUndoFor(Store store, Ui ui, Storage storage, int counter) throws DuchessException {
@@ -56,4 +55,17 @@ public class UndoCommand extends Command {
     //         store.setModuleList(newStore.getModuleList());
     //     }
     // }
+
+    private void getPreviousStore(Store store, Storage storage) throws DuchessException {
+        // You obtain Store data from storage Stack
+        Store prevStore = storage.getLastSnapshot();
+
+        // Write to JSON DATA:
+        storage.save(prevStore);
+
+        // you are getting store from stack
+        Store newStore = storage.load();
+        store.setTaskList(newStore.getTaskList());
+        store.setModuleList(newStore.getModuleList());
+    }
 }

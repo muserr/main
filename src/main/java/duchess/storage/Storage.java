@@ -19,10 +19,12 @@ import java.util.Stack;
 public class Storage {
     private String fileName;
     private Stack<String> undoStack;
+    boolean isPrevUndo;
 
     public Storage(String fileName) {
         this.fileName = fileName;
         undoStack = new Stack<>();
+        isPrevUndo = false;
     }
 
     // Unchecked type coercion is necessary here.
@@ -98,15 +100,19 @@ public class Storage {
         List<String> words = Arrays.asList(userInput.split(" "));
         String keyword = words.get(0);
 
-        if(!keyword.equalsIgnoreCase("undo")) {
-            try {
-                String jsonVal = getObjectMapper().writeValueAsString(store);
-                undoStack.push(jsonVal);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                throw new DuchessException("Undo stack push was unsuccessful.");
-            }
+        try {
+            String jsonVal = getObjectMapper().writeValueAsString(store);
+            undoStack.push(jsonVal);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new DuchessException("Undo stack push was unsuccessful.");
         }
+
+        // if(!keyword.equalsIgnoreCase("undo")) {
+        //     isPrevUndo = false;
+        // } else {
+        //     isPrevUndo = true;
+        // }
     }
 
     public Stack<String> getUndoStack() {
