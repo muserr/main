@@ -25,13 +25,14 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        storage.setPreviousUndoFalse();
         try {
             int taskNo = Integer.parseInt(words.get(0)) - 1;
             Task toRemove = store.getTaskList().get(taskNo);
             store.getTaskList().remove(taskNo);
             ui.showDeletedTask(store.getTaskList(), toRemove);
             storage.save(store);
+
+            storage.setPreviousUndoFalse();
         } catch (NumberFormatException e) {
             throw new DuchessException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {

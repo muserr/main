@@ -13,22 +13,24 @@ public class UndoCommand extends Command {
     /**
      * Checks if undo command contains additional parameters.
      *
-     * @param words additional parameters for undo.
-     * @throws DuchessException throws exceptions if invalid command.
+     * @param words additional parameters for undo
+     * @throws DuchessException throws exceptions if invalid command
      */
     public UndoCommand(List<String> words) throws DuchessException {
-        if (words.size() == 1) {
+        if (words.size() != 1 || words.size() != 0) {
+            throw new DuchessException("Usage: undo [number]");
+        } else if (words.size() == 1) {
             undoCounter = Integer.parseInt(words.get(0));
         } else if (words.size() == 0) {
             undoCounter = 1;
-        } else {
-            throw new DuchessException("Usage: undo [number]");
         }
     }
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        if (storage.getPreviousUndoStatus() == false) {
+        if (storage.getPreviousUndoStatus() == true) {
+            throw new DuchessException("Last command cannot be undo. Use redo instead.");
+        } else {
             // Update boolean to prevent next command to be undo.
             storage.setPreviousUndoTrue();
 
@@ -46,19 +48,17 @@ public class UndoCommand extends Command {
                 storage.getLastSnapshot();
                 getPreviousStore(store, storage);
             }
-        } else {
-            throw new DuchessException("Last command cannot be undo. Use redo instead.");
         }
     }
 
     private void getPreviousStore(Store store, Storage storage) throws DuchessException {
-        // You obtain Store data from storage Stack
+        // Obtain Store data from storage Stack
         Store prevStore = storage.getLastSnapshot();
 
-        // Write to JSON DATA:
+        // Write to JSON file
         storage.save(prevStore);
 
-        // you are getting store from stack
+        // Obtaining store from stack
         Store newStore = storage.load();
         store.setTaskList(newStore.getTaskList());
         store.setModuleList(newStore.getModuleList());

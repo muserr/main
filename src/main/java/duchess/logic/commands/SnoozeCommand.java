@@ -17,7 +17,6 @@ public class SnoozeCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        storage.setPreviousUndoFalse();
         try {
             int taskNo = Integer.parseInt(words.get(0)) - 1;
             Task task = store.getTaskList().get(taskNo);
@@ -25,6 +24,8 @@ public class SnoozeCommand extends Command {
             task.snooze();
             ui.showSnoozedTask(task);
             storage.save(store);
+
+            storage.setPreviousUndoFalse();
         } catch (NumberFormatException e) {
             throw new DuchessException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {
