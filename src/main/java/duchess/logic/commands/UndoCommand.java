@@ -28,26 +28,19 @@ public class UndoCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        if (storage.getPreviousUndoStatus() == true) {
-            throw new DuchessException("Last command cannot be undo. Use redo instead.");
-        } else {
-            // Update boolean to prevent next command to be undo.
-            storage.setPreviousUndoTrue();
+        // Perform undo function.
+        ui.showUndo(undoCounter);
 
-            // Perform undo function.
-            ui.showUndo(undoCounter);
+        if (undoCounter > 1) {
+            storage.getLastSnapshot();
 
-            if (undoCounter > 1) {
-                storage.getLastSnapshot();
-
-                while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
-                    getPreviousStore(store, storage);
-                    undoCounter--;
-                }
-            } else {
-                storage.getLastSnapshot();
+            while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
                 getPreviousStore(store, storage);
+                undoCounter--;
             }
+        } else {
+            storage.getLastSnapshot();
+            getPreviousStore(store, storage);
         }
     }
 

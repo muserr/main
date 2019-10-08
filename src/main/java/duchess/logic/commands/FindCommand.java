@@ -26,8 +26,6 @@ public class FindCommand extends Command {
                             .filter(task -> task.containsKeyword(searchTerm))
                             .collect(Collectors.toList());
 
-            storage.setPreviousUndoFalse();
-
             if (filteredTasks.size() > 0) {
                 ui.showSearchResult(filteredTasks);
             } else {
