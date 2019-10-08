@@ -112,7 +112,11 @@ public class Storage {
 
         try {
             String jsonVal = getObjectMapper().writeValueAsString(store);
-            String undoStackTop = undoStack.peek();
+            String undoStackTop = new String();
+
+            if (undoStack.size() != 0) {
+                undoStackTop = undoStack.peek();
+            }
 
             // Only push to undoStack if the topmost stack object is different.
             if (!undoStackTop.equals(jsonVal)) {
