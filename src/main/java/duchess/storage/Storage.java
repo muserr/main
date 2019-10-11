@@ -12,11 +12,15 @@ import duchess.exceptions.DuchessException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Storage {
     private String fileName;
-    private Stack<String> undoStack;
+    private Deque<String> undoStack;
+    private Deque<String> redoStack;
 
     /**
      * Constructs Storage object.
@@ -25,7 +29,8 @@ public class Storage {
      */
     public Storage(String fileName) {
         this.fileName = fileName;
-        undoStack = new Stack<>();
+        undoStack = new LinkedList<>();
+        redoStack = new LinkedList<>();
     }
 
     // Unchecked type coercion is necessary here.
@@ -81,11 +86,13 @@ public class Storage {
      */
     public Store getLastSnapshot() throws DuchessException {
         if (undoStack.size() == 0) {
-            throw new DuchessException("There's nothing to undo");
+            throw new DuchessException("There's nothing to undo.");
         }
 
-        String jsonVal = undoStack.peek();
-        undoStack.pop();
+        String jsonVal = undoStack.pollLast();
+
+        // Add this string to redoStack
+        redoStack.addFirst(jsonVal);
 
         try {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
@@ -98,7 +105,7 @@ public class Storage {
             throw new DuchessException("Mapping was unsuccessful.");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new DuchessException("Check storage input issues.");
+            throw new DuchessException("Check storage input.");
         }
     }
 
@@ -115,12 +122,13 @@ public class Storage {
             String undoStackTop = new String();
 
             if (undoStack.size() != 0) {
-                undoStackTop = undoStack.peek();
+                undoStackTop = undoStack.peekLast();
             }
 
             // Only push to undoStack if the topmost stack object is different.
             if (!undoStackTop.equals(jsonVal)) {
-                undoStack.push(jsonVal);
+                //undoStack.push(jsonVal);
+                undoStack.addLast(jsonVal);
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -129,7 +137,42 @@ public class Storage {
 
     }
 
-    public Stack<String> getUndoStack() {
+    /**
+     * Obtains first Store object.
+     *
+     * @return first Store object
+     * @throws DuchessException throws exception when unable to obtain Store object
+     */
+    public Store getFirstSnapshot() throws DuchessException {
+        if (redoStack.size() == 0) {
+            throw new DuchessException("There's nothing to redo.");
+        }
+
+        String jsonVal = redoStack.pollFirst();
+
+        // Add this string to undoStack
+        undoStack.addLast(jsonVal);
+
+        try {
+            Store store = getObjectMapper().readValue(jsonVal, Store.class);
+            return store;
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+            throw new DuchessException("JSON parse was unsuccessful.");
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+            throw new DuchessException("Mapping was unsuccessful.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DuchessException("Check storage input.");
+        }
+    }
+
+    public Deque<String> getUndoStack() {
+        return this.undoStack;
+    }
+
+    public Deque<String> getRedoStack() {
         return this.undoStack;
     }
 }

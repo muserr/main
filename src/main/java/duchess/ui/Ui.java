@@ -265,6 +265,18 @@ public class Ui {
     }
 
     /**
+     * Displays number of undone actions to user.
+     *
+     * @param redoCounter number of undo operations
+     */
+    public void showRedo(int redoCounter) {
+        if (redoCounter == 1) {
+            printIndented("I redid the last command.");
+        } else {
+            printIndented("I redid the last few commands.");
+        }
+    }
+    /**
      * Prints a straight line.
      */
     private void printHR() {

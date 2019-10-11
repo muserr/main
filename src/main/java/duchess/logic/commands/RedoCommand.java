@@ -7,8 +7,9 @@ import duchess.ui.Ui;
 
 import java.util.List;
 
-public class UndoCommand extends Command {
-    private int undoCounter;
+public class RedoCommand extends Command {
+
+    private int redoCounter;
 
     /**
      * Checks if undo command contains additional parameters.
@@ -16,38 +17,38 @@ public class UndoCommand extends Command {
      * @param words additional parameters for undo
      * @throws DuchessException throws exceptions if invalid command
      */
-    public UndoCommand(List<String> words) throws DuchessException {
+    public RedoCommand(List<String> words) throws DuchessException {
         if (words.size() != 1 && words.size() != 0) {
-            throw new DuchessException("Usage: undo [number]");
+            throw new DuchessException("Usage: redo [number]");
         } else if (words.size() == 1) {
-            undoCounter = Integer.parseInt(words.get(0));
+            redoCounter = Integer.parseInt(words.get(0));
         } else if (words.size() == 0) {
-            undoCounter = 1;
+            redoCounter = 1;
         }
     }
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
 
-        if (undoCounter > 1) {
-            storage.getLastSnapshot();
+        if (redoCounter > 1) {
+            storage.getFirstSnapshot();
 
-            while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
-                setToPreviousStore(store, storage);
-                undoCounter--;
+            while (redoCounter > 0 && storage.getRedoStack().size() > 0) {
+                setToNextStore(store, storage);
+                redoCounter--;
             }
         } else {
-            storage.getLastSnapshot();
-            setToPreviousStore(store, storage);
+            storage.getFirstSnapshot();
+            setToNextStore(store, storage);
         }
 
         // showUndo should only be placed after execution of undo.
-        ui.showUndo(undoCounter);
+        ui.showRedo(redoCounter);
     }
 
-    private void setToPreviousStore(Store store, Storage storage) throws DuchessException {
+    private void setToNextStore(Store store, Storage storage) throws DuchessException {
         // Obtain Store data from storage Stack
-        Store prevStore = storage.getLastSnapshot();
+        Store prevStore = storage.getFirstSnapshot();
 
         // Write to JSON file
         storage.save(prevStore);
