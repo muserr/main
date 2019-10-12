@@ -171,7 +171,7 @@ public class Storage {
         }
     }
 
-    public void setClearRedoStackTrue(){
+    public void setClearRedoStackTrue() {
         isClearRedoStack = true;
     }
 
@@ -183,6 +183,9 @@ public class Storage {
         return isClearRedoStack;
     }
 
+    /**
+     * Checks and clears redoStack if necessary.
+     */
     public void setRedoStack() {
         if (isClearRedoStack == true) {
             redoStack.clear();

@@ -276,6 +276,7 @@ public class Ui {
             printIndented("I redid the last few commands.");
         }
     }
+
     /**
      * Prints a straight line.
      */
