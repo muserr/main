@@ -22,6 +22,8 @@ public class Storage {
     private Deque<String> undoStack;
     private Deque<String> redoStack;
 
+    private boolean isClearRedoStack;
+
     /**
      * Constructs Storage object.
      *
@@ -31,6 +33,7 @@ public class Storage {
         this.fileName = fileName;
         undoStack = new LinkedList<>();
         redoStack = new LinkedList<>();
+        isClearRedoStack = false;
     }
 
     // Unchecked type coercion is necessary here.
@@ -165,6 +168,24 @@ public class Storage {
         } catch (IOException e) {
             e.printStackTrace();
             throw new DuchessException("Check storage input.");
+        }
+    }
+
+    public void setClearRedoStackTrue(){
+        isClearRedoStack = true;
+    }
+
+    public void setClearRedoStackFalse() {
+        isClearRedoStack = false;
+    }
+
+    public boolean isClearRedoStack() {
+        return isClearRedoStack;
+    }
+
+    public void setRedoStack() {
+        if (isClearRedoStack == true) {
+            redoStack.clear();
         }
     }
 

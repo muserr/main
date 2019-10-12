@@ -29,6 +29,7 @@ public class ReminderCommand extends Command {
         List<Task> reminderList = addTimedActivities(store.getTaskList());
         Collections.sort(reminderList);
         display(reminderList, ui);
+        storage.setClearRedoStackFalse();
     }
 
     /**

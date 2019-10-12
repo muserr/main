@@ -50,6 +50,9 @@ public class Duke {
                 storage.addToUndoStackPush(store);
 
                 c.execute(store, ui, storage);
+
+                storage.setRedoStack();
+
                 isExit = c.isExit();
             } catch (DuchessException e) {
                 ui.showError(e.getMessage());
