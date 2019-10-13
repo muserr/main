@@ -11,7 +11,6 @@ public class Duke {
     private Storage storage;
     private Store store;
     private Ui ui;
-    private DuchessLog duchessLog;
 
     /**
      * Creates an instant of Duke to be executed.
@@ -39,7 +38,7 @@ public class Duke {
      */
     private void run() {
         ui.showWelcome();
-        duchessLog = new DuchessLog();
+        DuchessLog duchessLog = new DuchessLog();
 
 
         boolean isExit = false;
