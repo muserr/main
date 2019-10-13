@@ -195,6 +195,11 @@ public class Storage {
         return this.undoStack;
     }
 
+    /**
+     * Returns the top object of UndoStack as a Store object.
+     *
+     * @return top object as a store object
+     */
     public Store peekUndoStackAsStore() {
         if (undoStack.size() != 0) {
             try {
