@@ -28,7 +28,6 @@ public class UndoCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-
         if (undoCounter > 1) {
             while (undoCounter > 0 && storage.getUndoStack().size() > 1) {
                 setToPreviousStore(store, ui, storage);
