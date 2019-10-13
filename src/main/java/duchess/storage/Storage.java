@@ -90,7 +90,7 @@ public class Storage {
      * @throws DuchessException throws exception when unable to obtain Store object
      */
     public Store getLastSnapshot() throws DuchessException {
-        if (undoStack.size() == 0) {
+        if (undoStack.size() == 1) {
             throw new DuchessException("There's nothing to undo.");
         }
 

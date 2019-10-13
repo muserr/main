@@ -35,7 +35,7 @@ public class UndoCommand extends Command {
                 setToPreviousStore(store, ui, storage);
                 undoCounter--;
             }
-        } else {
+        } else if (undoCounter == 1) {
 
             if (storage.getUndoStack().size() == 2) {
                 System.out.println("UNDOSTACK == SIZE OF 1!@!@!@!");

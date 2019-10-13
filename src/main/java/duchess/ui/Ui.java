@@ -259,6 +259,8 @@ public class Ui {
     public void showUndo(int undoCounter) {
         if (undoCounter == 1) {
             printIndented("The last command has been undone.");
+        } else if (undoCounter == 0) {
+            printIndented("There's nothing to undo.");
         } else {
             printIndented("The last few commands have been undone.");
         }
