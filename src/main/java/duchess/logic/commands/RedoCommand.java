@@ -32,18 +32,18 @@ public class RedoCommand extends Command {
         if (redoCounter > 1) {
             // storage.getFirstSnapshot();
             while (redoCounter > 0 && storage.getRedoStack().size() > 0) {
-                setToNextStore(store, ui, storage);
+                setToNextStore(store, storage);
                 redoCounter--;
             }
         } else {
             // storage.getFirstSnapshot();
-            setToNextStore(store, ui, storage);
+            setToNextStore(store, storage);
         }
         // showUndo should only be placed after execution of undo.
         ui.showRedo(redoCounter);
     }
 
-    private void setToNextStore(Store store, Ui ui, Storage storage) throws DuchessException {
+    private void setToNextStore(Store store, Storage storage) throws DuchessException {
         // Obtain Store data from storage Stack
         Store prevStore = storage.getFirstSnapshot();
         storage.save(prevStore);

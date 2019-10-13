@@ -14,17 +14,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 
 public class Storage {
     private String fileName;
     private Deque<String> undoStack;
     private Deque<String> redoStack;
-
-    private boolean isClearRedoStack;
-
-    private Store loadedStore;
 
     /**
      * Constructs Storage object.
@@ -35,7 +29,6 @@ public class Storage {
         this.fileName = fileName;
         undoStack = new LinkedList<>();
         redoStack = new LinkedList<>();
-        isClearRedoStack = false;
     }
 
     // Unchecked type coercion is necessary here.
@@ -130,6 +123,8 @@ public class Storage {
                 // Only push to undoStack if the topmost stack object is different.
                 if (!undoStackTop.equals(jsonVal)) {
                     undoStack.addLast(jsonVal);
+
+                    // Clears redo whenever there store is modified.
                     redoStack.clear();
                 }
             } else {
@@ -171,19 +166,6 @@ public class Storage {
         } catch (IOException e) {
             e.printStackTrace();
             throw new DuchessException("Check storage input.");
-        }
-    }
-
-    public boolean isClearRedoStack() {
-        return isClearRedoStack;
-    }
-
-    /**
-     * Checks and clears redoStack if necessary.
-     */
-    public void setRedoStack() {
-        if (isClearRedoStack == true) {
-            redoStack.clear();
         }
     }
 
