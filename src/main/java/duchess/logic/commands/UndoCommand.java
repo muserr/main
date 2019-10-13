@@ -46,9 +46,7 @@ public class UndoCommand extends Command {
                 System.out.println("ONLY 1 UNDO COMMAND");
                 // Already polls once. (YOU MUST POLL AT LEAST ONCE).
                 storage.getLastSnapshot();
-
                 ui.showTaskList(store.getTaskList());
-
                 setToPreviousStore(store, ui, storage);
             }
         }

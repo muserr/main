@@ -29,24 +29,22 @@ public class RedoCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-
         if (redoCounter > 1) {
-            storage.getFirstSnapshot();
-
+            // storage.getFirstSnapshot();
             while (redoCounter > 0 && storage.getRedoStack().size() > 0) {
-                setToNextStore(store, storage);
+                setToNextStore(store, ui, storage);
                 redoCounter--;
             }
         } else {
-            storage.getFirstSnapshot();
-            setToNextStore(store, storage);
+            // storage.getFirstSnapshot();
+            setToNextStore(store, ui, storage);
         }
 
         // showUndo should only be placed after execution of undo.
         ui.showRedo(redoCounter);
     }
 
-    private void setToNextStore(Store store, Storage storage) throws DuchessException {
+    private void setToNextStore(Store store, Ui ui, Storage storage) throws DuchessException {
         // Obtain Store data from storage Stack
         Store prevStore = storage.getFirstSnapshot();
 
@@ -57,5 +55,6 @@ public class RedoCommand extends Command {
         Store newStore = storage.load();
         store.setTaskList(newStore.getTaskList());
         store.setModuleList(newStore.getModuleList());
+        ui.showTaskList(store.getTaskList());
     }
 }

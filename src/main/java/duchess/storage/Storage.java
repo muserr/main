@@ -123,12 +123,9 @@ public class Storage {
      * @throws DuchessException throws exception when unable to push object to stack
      */
     public void addToUndoStackPush(Store store) throws DuchessException {
-
         try {
             String jsonVal = getObjectMapper().writeValueAsString(store);
             String undoStackTop;
-
-            // String undoStackTop = new String();
 
             if (undoStack.size() != 0) {
                 undoStackTop = undoStack.peekLast();
@@ -136,6 +133,7 @@ public class Storage {
                 // Only push to undoStack if the topmost stack object is different.
                 if (!undoStackTop.equals(jsonVal)) {
                     undoStack.addLast(jsonVal);
+                    redoStack.clear();
                 }
             } else {
                 assert (undoStack.size() == 0);
@@ -198,23 +196,6 @@ public class Storage {
 
     public Deque<String> getRedoStack() {
         return this.undoStack;
-    }
-
-    public void setLoadedStore(Store store) {
-        loadedStore = store;
-    }
-
-    public Store getLoadedStore() {
-        return this.loadedStore;
-    }
-
-    public void displayStore(Store temp) {
-        try {
-            String jsonVal = getObjectMapper().writeValueAsString(temp);
-            System.out.println(jsonVal);
-        } catch (Exception e) {
-            System.out.println("PRINTING UNAVAIL!!!!!");
-        }
     }
 
     public Store peekUndoStackAsStore() {
