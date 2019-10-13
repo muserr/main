@@ -51,13 +51,10 @@ public class Duke {
                 Command c = Parser.parse(fullCommand);
                 duchessLog.addValidCommands(c);
 
-
                 c.execute(store, ui, storage);
 
                 // Take snapshot here, you save copies of Store store here
                 storage.addToUndoStackPush(store);
-
-                // storage.setRedoStack();
 
                 isExit = c.isExit();
             } catch (DuchessException e) {

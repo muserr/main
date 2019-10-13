@@ -31,22 +31,15 @@ public class UndoCommand extends Command {
 
         if (undoCounter > 1) {
             while (undoCounter > 0 && storage.getUndoStack().size() > 1) {
-                storage.getLastSnapshot();
                 setToPreviousStore(store, ui, storage);
                 undoCounter--;
             }
         } else if (undoCounter == 1) {
 
             if (storage.getUndoStack().size() == 2) {
-                System.out.println("UNDOSTACK == SIZE OF 1!@!@!@!");
-                storage.getLastSnapshot();
                 setToPreviousStore(store, ui, storage);
 
             } else if (storage.getUndoStack().size() > 1) {
-                System.out.println("ONLY 1 UNDO COMMAND");
-                // Already polls once. (YOU MUST POLL AT LEAST ONCE).
-                storage.getLastSnapshot();
-                ui.showTaskList(store.getTaskList());
                 setToPreviousStore(store, ui, storage);
             }
         }
@@ -56,6 +49,7 @@ public class UndoCommand extends Command {
     }
 
     private void setToPreviousStore(Store store, Ui ui, Storage storage) throws DuchessException {
+        storage.getLastSnapshot();
         storage.save(storage.peekUndoStackAsStore());
 
         // Obtaining store from stack
@@ -63,7 +57,5 @@ public class UndoCommand extends Command {
         assert (store == newStore);
         store.setTaskList(newStore.getTaskList());
         store.setModuleList(newStore.getModuleList());
-
-        ui.showTaskList(store.getTaskList());
     }
 }

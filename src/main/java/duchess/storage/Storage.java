@@ -90,14 +90,11 @@ public class Storage {
      * @throws DuchessException throws exception when unable to obtain Store object
      */
     public Store getLastSnapshot() throws DuchessException {
-        if (undoStack.size() == 1) {
+        if (undoStack.size() == 0) {
             throw new DuchessException("There's nothing to undo.");
         }
 
         String jsonVal = undoStack.pollLast();
-
-        System.out.println("Last snapshot:" + jsonVal);
-
         // Add this string to redoStack
         redoStack.addFirst(jsonVal);
 
