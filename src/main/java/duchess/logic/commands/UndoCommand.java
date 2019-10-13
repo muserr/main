@@ -33,12 +33,36 @@ public class UndoCommand extends Command {
             storage.getLastSnapshot();
 
             while (undoCounter > 0 && storage.getUndoStack().size() > 0) {
-                setToPreviousStore(store, storage);
+                // setToPreviousStore(store, storage);
                 undoCounter--;
             }
         } else {
+
+            if (storage.getUndoStack().size() == 1) {
+
+            }
+
+
+            System.out.println("ONLY 1 UNDO COMMAND");
+            // Pops end of stack.
+            // setToPreviousStore(store, storage);
+
+            // Already polls once. (YOU MUST POLL AT LEAST ONCE).
             storage.getLastSnapshot();
-            setToPreviousStore(store, storage);
+
+            ui.showTaskList(store.getTaskList());
+
+            // Get lastSnapshot round 2
+            storage.save(storage.getLastSnapshot());
+
+            // Obtaining store from stack
+            Store newStore = storage.load();
+            assert (store == newStore);
+            store.setTaskList(newStore.getTaskList());
+            store.setModuleList(newStore.getModuleList());
+
+            ui.showTaskList(store.getTaskList());
+
         }
 
         // showUndo should only be placed after execution of undo.

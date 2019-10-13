@@ -24,6 +24,8 @@ public class Storage {
 
     private boolean isClearRedoStack;
 
+    private Store loadedStore;
+
     /**
      * Constructs Storage object.
      *
@@ -94,6 +96,8 @@ public class Storage {
 
         String jsonVal = undoStack.pollLast();
 
+        System.out.println("Last snapshot:" + jsonVal);
+
         // Add this string to redoStack
         redoStack.addFirst(jsonVal);
 
@@ -122,15 +126,19 @@ public class Storage {
 
         try {
             String jsonVal = getObjectMapper().writeValueAsString(store);
-            String undoStackTop = new String();
+            String undoStackTop;
+
+            // String undoStackTop = new String();
 
             if (undoStack.size() != 0) {
                 undoStackTop = undoStack.peekLast();
-            }
 
-            // Only push to undoStack if the topmost stack object is different.
-            if (!undoStackTop.equals(jsonVal)) {
-                //undoStack.push(jsonVal);
+                // Only push to undoStack if the topmost stack object is different.
+                if (!undoStackTop.equals(jsonVal)) {
+                    undoStack.addLast(jsonVal);
+                }
+            } else {
+                assert (undoStack.size() == 0);
                 undoStack.addLast(jsonVal);
             }
         } catch (JsonProcessingException e) {
@@ -190,5 +198,13 @@ public class Storage {
 
     public Deque<String> getRedoStack() {
         return this.undoStack;
+    }
+
+    public void setLoadedStore(Store store) {
+        loadedStore = store;
+    }
+
+    public Store getLoadedStore() {
+        return this.loadedStore;
     }
 }

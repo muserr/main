@@ -24,9 +24,15 @@ public class Duke {
 
         try {
             store = storage.load();
+
+
         } catch (DuchessException e) {
             ui.showError(e.getMessage());
             store = new Store();
+
+        } finally {
+            // Set loadedStore
+            storage.setLoadedStore(store);
         }
     }
 
@@ -52,8 +58,7 @@ public class Duke {
                 // Take snapshot here, you save copies of Store store here
                 storage.addToUndoStackPush(store);
 
-
-                storage.setRedoStack();
+                // storage.setRedoStack();
 
                 isExit = c.isExit();
             } catch (DuchessException e) {
