@@ -38,31 +38,42 @@ public class UndoCommand extends Command {
             }
         } else {
 
-            if (storage.getUndoStack().size() == 1) {
+            if (storage.getUndoStack().size() == 2) {
+                System.out.println("UNDOSTACK == SIZE OF 1!@!@!@!");
+                storage.getLastSnapshot();
+                Store temp = storage.peekUndoStackAsStore();
+                storage.save(temp);
+                storage.displayStore(temp);
 
+                // Obtaining store from stack
+                Store newStore = storage.load();
+                assert (store == newStore);
+                store.setTaskList(newStore.getTaskList());
+                store.setModuleList(newStore.getModuleList());
+
+                ui.showTaskList(store.getTaskList());
+
+            } else if (storage.getUndoStack().size() > 1) {
+                System.out.println("ONLY 1 UNDO COMMAND");
+                // Pops end of stack.
+                // setToPreviousStore(store, storage);
+
+                // Already polls once. (YOU MUST POLL AT LEAST ONCE).
+                storage.getLastSnapshot();
+
+                ui.showTaskList(store.getTaskList());
+
+                // Get lastSnapshot round 2
+                storage.save(storage.getLastSnapshot());
+
+                // Obtaining store from stack
+                Store newStore = storage.load();
+                assert (store == newStore);
+                store.setTaskList(newStore.getTaskList());
+                store.setModuleList(newStore.getModuleList());
+
+                ui.showTaskList(store.getTaskList());
             }
-
-
-            System.out.println("ONLY 1 UNDO COMMAND");
-            // Pops end of stack.
-            // setToPreviousStore(store, storage);
-
-            // Already polls once. (YOU MUST POLL AT LEAST ONCE).
-            storage.getLastSnapshot();
-
-            ui.showTaskList(store.getTaskList());
-
-            // Get lastSnapshot round 2
-            storage.save(storage.getLastSnapshot());
-
-            // Obtaining store from stack
-            Store newStore = storage.load();
-            assert (store == newStore);
-            store.setTaskList(newStore.getTaskList());
-            store.setModuleList(newStore.getModuleList());
-
-            ui.showTaskList(store.getTaskList());
-
         }
 
         // showUndo should only be placed after execution of undo.

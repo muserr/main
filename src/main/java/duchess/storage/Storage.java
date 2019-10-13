@@ -207,4 +207,27 @@ public class Storage {
     public Store getLoadedStore() {
         return this.loadedStore;
     }
+
+    public void displayStore(Store temp) {
+        try {
+            String jsonVal = getObjectMapper().writeValueAsString(temp);
+            System.out.println(jsonVal);
+        } catch (Exception e) {
+            System.out.println("PRINTING UNAVAIL!!!!!");
+        }
+    }
+
+    public Store peekUndoStackAsStore() {
+        if (undoStack.size() != 0) {
+            try {
+                String undoStackString = undoStack.peekLast();
+                Store store = getObjectMapper().readValue(undoStackString, Store.class);
+                return store;
+
+            } catch (Exception e) {
+                System.out.println("Unable to convert String to Store.");
+            }
+        }
+        return new Store();
+    }
 }
