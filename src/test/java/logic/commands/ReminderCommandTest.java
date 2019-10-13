@@ -1,8 +1,10 @@
+package logic.commands;
+
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.AddDeadlineCommand;
 import duchess.logic.commands.ReminderCommand;
-import duchess.logic.parser.Parser;
 import duchess.model.task.DuchessLog;
+import duchess.parser.Parser;
 import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;

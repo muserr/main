@@ -1,7 +1,7 @@
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.Command;
-import duchess.logic.parser.Parser;
 import duchess.model.task.DuchessLog;
+import duchess.parser.Parser;
 import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;
@@ -49,7 +49,7 @@ public class Duke {
                 duchessLog.add(fullCommand);
                 ui.beginBlock();
                 Command c = Parser.parse(fullCommand);
-                duchessLog.addValidCommands(c);
+                DuchessLog.addValidCommands(c);
 
                 c.execute(store, ui, storage);
 
