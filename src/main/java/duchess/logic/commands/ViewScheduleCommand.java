@@ -87,6 +87,5 @@ public class ViewScheduleCommand extends Command {
         ui.showScheduleResult(tasksForToday, date, academicContext.getAcademicContext()
         );
 
-        storage.setClearRedoStackFalse();
     }
 }

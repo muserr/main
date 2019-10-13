@@ -43,7 +43,6 @@ public class UndoCommand extends Command {
 
         // showUndo should only be placed after execution of undo.
         ui.showUndo(undoCounter);
-        storage.setClearRedoStackFalse();
     }
 
     private void setToPreviousStore(Store store, Storage storage) throws DuchessException {

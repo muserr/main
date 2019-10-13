@@ -24,7 +24,6 @@ public class SnoozeCommand extends Command {
             task.snooze();
             ui.showSnoozedTask(task);
             storage.save(store);
-            storage.setClearRedoStackTrue();
         } catch (NumberFormatException e) {
             throw new DuchessException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {

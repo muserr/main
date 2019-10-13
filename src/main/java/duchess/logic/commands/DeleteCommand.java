@@ -31,7 +31,6 @@ public class DeleteCommand extends Command {
             store.getTaskList().remove(taskNo);
             ui.showDeletedTask(store.getTaskList(), toRemove);
             storage.save(store);
-            storage.setClearRedoStackTrue();
         } catch (NumberFormatException e) {
             throw new DuchessException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {

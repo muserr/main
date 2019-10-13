@@ -42,7 +42,6 @@ public class FindCommand extends Command {
         if (words.size() == 0) {
             throw new DuchessException("Please enter at least a keyword to search.");
         } else {
-            storage.setClearRedoStackFalse();
             String searchTerm = String.join(" ", words.subList(0, words.size()));
             List<Task> filteredTasks;
             /*

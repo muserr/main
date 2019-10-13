@@ -171,14 +171,6 @@ public class Storage {
         }
     }
 
-    public void setClearRedoStackTrue() {
-        isClearRedoStack = true;
-    }
-
-    public void setClearRedoStackFalse() {
-        isClearRedoStack = false;
-    }
-
     public boolean isClearRedoStack() {
         return isClearRedoStack;
     }
