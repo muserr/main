@@ -12,7 +12,6 @@ import duchess.exceptions.DuchessException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.NotSerializableException;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -114,7 +113,7 @@ public class Storage {
      * @throws DuchessException throws exception when unable to push object to stack
      */
     public void addToUndoStackPush(Store store) {
-        String jsonVal = storeToString(store);
+        String jsonVal = getStoreToString(store);
         String undoStackTop;
 
         if (undoStack.size() != 0) {
@@ -196,11 +195,12 @@ public class Storage {
      * @param store store object
      * @return string representative of Store object
      */
-    private String storeToString(Store store) {
-        String jsonVal = new String();
+    private String getStoreToString(Store store) {
+        String jsonVal;
         try {
             jsonVal = getObjectMapper().writeValueAsString(store);
         } catch (JsonProcessingException e) {
+            jsonVal = new String();
             e.printStackTrace();
         }
         return jsonVal;
