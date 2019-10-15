@@ -3,7 +3,6 @@ package duchess.parser.states;
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.AddDeadlineCommand;
 import duchess.logic.commands.AddEventCommand;
-import duchess.logic.commands.AddModuleCommand;
 import duchess.logic.commands.AddTodoCommand;
 import duchess.logic.commands.ByeCommand;
 import duchess.logic.commands.Command;
@@ -20,6 +19,7 @@ import duchess.logic.commands.ViewScheduleCommand;
 import duchess.parser.Parser;
 import duchess.parser.Util;
 import duchess.parser.commands.ListCommandParser;
+import duchess.parser.states.add.AddState;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -50,17 +50,9 @@ public class DefaultState implements ParserState {
         case "list":
             return ListCommandParser.parse(parameters);
         case "add":
-            try {
-                String secondKeyword = words.get(1);
-                switch (secondKeyword) {
-                case "module":
-                    return new AddModuleCommand(words.subList(2, words.size()));
-                default:
-                    throw new IllegalArgumentException();
-                }
-            } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
-                throw new DuchessException("Usage: add module <module-code> <module-name>");
-            }
+            return this.parser
+                    .setParserState(new AddState(this.parser))
+                    .continueParsing(parameters);
         case "find":
             return new FindCommand(arguments);
         case "delete":
@@ -160,5 +152,11 @@ public class DefaultState implements ParserState {
         default:
             throw new DuchessException("Please enter a valid command.");
         }
+    }
+
+    @Override
+    public Command continueParsing(Map<String, String> parameters) throws DuchessException {
+        // This should never be called theoretically
+        throw new DuchessException("An unexpected error occurred while processing your command.");
     }
 }

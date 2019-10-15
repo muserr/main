@@ -127,8 +127,7 @@ public class Ui {
      * @param tasks List of tasks to show
      * @param date  Date
      */
-    public void showScheduleResult(List<Task> tasks, String date, String academicContext) {
-        printIndented(academicContext);
+    public void showScheduleResult(List<Task> tasks, String date) {
         printIndented("Here is your schedule for " + date + ":");
         int counter = 1;
         for (Task t : tasks) {
@@ -305,6 +304,15 @@ public class Ui {
      */
     public void showDeletedModule(Module module) {
         printIndented("You've deleted " + module + ".");
+    }
+
+    /**
+     * Displays a given message.
+     *
+     * @param msg the message to display
+     */
+    public void displayMessage(String msg) {
+        printIndented(msg);
     }
 
     /**
