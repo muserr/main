@@ -39,7 +39,6 @@ public class Duke {
         ui.showWelcome();
         DuchessLog duchessLog = new DuchessLog();
 
-
         boolean isExit = false;
         while (!isExit) {
             try {
