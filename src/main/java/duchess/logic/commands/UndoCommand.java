@@ -29,17 +29,20 @@ public class UndoCommand extends Command {
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
         if (undoCounter > 1) {
+            if (storage.getUndoStack().size() > 1) {
+                System.out.println("UNDO COUNTER > 1");
+                storage.addToRedoStack();
+            }
+
             while (undoCounter > 0 && storage.getUndoStack().size() > 1) {
-                setToPreviousStore(store, storage);
+                System.out.println("Current counter == " + undoCounter);
+                setToPreviousStore(undoCounter, store, storage);
                 undoCounter--;
             }
         } else if (undoCounter == 1) {
-
-            if (storage.getUndoStack().size() == 2) {
-                setToPreviousStore(store, storage);
-
-            } else if (storage.getUndoStack().size() > 1) {
-                setToPreviousStore(store, storage);
+            if (storage.getUndoStack().size() >= 1) {
+                storage.addToRedoStack();
+                setToPreviousStore(undoCounter, store, storage);
             }
         }
 
@@ -47,8 +50,8 @@ public class UndoCommand extends Command {
         ui.showUndo(undoCounter);
     }
 
-    private void setToPreviousStore(Store store, Storage storage) throws DuchessException {
-        storage.getLastSnapshot();
+    private void setToPreviousStore(int undoCounter, Store store, Storage storage) throws DuchessException {
+        storage.getLastSnapshot(undoCounter);
         storage.save(storage.peekUndoStackAsStore());
 
         // Obtaining store from stack

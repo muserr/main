@@ -20,8 +20,13 @@ public class Storage {
     private Deque<String> undoStack;
     private Deque<String> redoStack;
 
-    private static final String RUN_TIME_ERROR_MESSAGE
-            = "JSON run time error.";
+    //private static final String RUN_TIME_ERROR_MESSAGE = "JSON run time error.";
+    private static final String UNREADABLE_FILE_MESSAGE
+            = "Unable to read file, continuing with empty list.";
+    private static final String FILE_WRITE_ERROR_MESSAGE
+            = "An unexpected error occurred when writing to the file. ";
+
+    private static final String JSON_PARSE_ERROR_MESSAGE = "JSON parse was unsuccessful.";
 
     /**
      * Constructs Storage object.
@@ -49,7 +54,7 @@ public class Storage {
             return store;
         } catch (IOException | ClassCastException e) {
             e.printStackTrace();
-            throw new DuchessException("Unable to read file, continuing with empty list.");
+            throw new DuchessException(UNREADABLE_FILE_MESSAGE);
         }
     }
 
@@ -65,7 +70,7 @@ public class Storage {
             getObjectMapper().writeValue(fileStream, store);
             fileStream.close();
         } catch (IOException e) {
-            throw new DuchessException("An unexpected error occurred when writing to the file. " + e);
+            throw new DuchessException(FILE_WRITE_ERROR_MESSAGE + e);
         }
     }
 
@@ -86,20 +91,18 @@ public class Storage {
      * @return last Store object
      * @throws DuchessException throws exception when unable to obtain Store object
      */
-    public Store getLastSnapshot() throws DuchessException {
+    public Store getLastSnapshot(int undoCounter) throws DuchessException {
         if (undoStack.size() == 0) {
             throw new DuchessException("There's nothing to undo.");
         }
 
         String jsonVal = undoStack.pollLast();
-        // Add this string to redoStack
-        redoStack.addFirst(jsonVal);
 
         try {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
             return store;
         } catch (JsonParseException e) {
-            throw new DuchessException("JSON parse was unsuccessful.");
+            throw new DuchessException(JSON_PARSE_ERROR_MESSAGE);
         } catch (JsonMappingException e) {
             e.printStackTrace();
             throw new DuchessException("Mapping was unsuccessful.");
@@ -205,10 +208,14 @@ public class Storage {
         } catch (JsonProcessingException e) {
             jsonVal = new String();
             assert (jsonVal.equals(""));
-
-            // Don't throw new runtimeexception. do nothing instead.
-            //throw new RuntimeException();
         }
         return jsonVal;
+    }
+
+    public void addToRedoStack() {
+        if(undoStack.size() != 0) {
+            String jsonVal = undoStack.peekLast();
+            redoStack.addFirst(jsonVal);
+        }
     }
 }
