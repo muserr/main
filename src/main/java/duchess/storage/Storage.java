@@ -20,6 +20,9 @@ public class Storage {
     private Deque<String> undoStack;
     private Deque<String> redoStack;
 
+    private static final String RUN_TIME_ERROR_MESSAGE
+            = "JSON run time error.";
+
     /**
      * Constructs Storage object.
      *
@@ -201,7 +204,10 @@ public class Storage {
             jsonVal = getObjectMapper().writeValueAsString(store);
         } catch (JsonProcessingException e) {
             jsonVal = new String();
-            e.printStackTrace();
+            assert (jsonVal.equals(""));
+
+            // Don't throw new runtimeexception. do nothing instead.
+            //throw new RuntimeException();
         }
         return jsonVal;
     }
