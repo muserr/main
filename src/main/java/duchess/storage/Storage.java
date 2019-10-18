@@ -212,8 +212,11 @@ public class Storage {
         return jsonVal;
     }
 
+    /**
+     * Adds deserialized string from undoStack to redoStack.
+     */
     public void addToRedoStack() {
-        if(undoStack.size() != 0) {
+        if (undoStack.size() != 0) {
             String jsonVal = undoStack.peekLast();
             redoStack.addFirst(jsonVal);
         }
