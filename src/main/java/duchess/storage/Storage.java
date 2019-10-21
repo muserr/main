@@ -20,7 +20,6 @@ public class Storage {
     private Deque<String> undoStack;
     private Deque<String> redoStack;
 
-    //private static final String RUN_TIME_ERROR_MESSAGE = "JSON run time error.";
     private static final String UNREADABLE_FILE_MESSAGE
             = "Unable to read file, continuing with empty list.";
     private static final String FILE_WRITE_ERROR_MESSAGE

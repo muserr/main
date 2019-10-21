@@ -28,14 +28,16 @@ public class UndoCommand extends Command {
 
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
-        if (storage.getUndoStack().size() >= 1) {
+        // if (storage.getUndoStack().size() >= 1) {
+        if (storage.getUndoStack().size() == 1) {
+            undoCounter = 0;
+        } else if (storage.getUndoStack().size() > 1) {
             if (undoCounter > 1) {
-                // addToRedoStack to be done before setToPreviousStore.
                 storage.addToRedoStack();
-
-                while (undoCounter > 0 && storage.getUndoStack().size() > 1) {
+                int tempCounter = undoCounter;
+                while (tempCounter > 0 && storage.getUndoStack().size() > 1) {
                     setToPreviousStore(undoCounter, store, storage);
-                    undoCounter--;
+                    tempCounter--;
                 }
             } else if (undoCounter == 1) {
                 storage.addToRedoStack();

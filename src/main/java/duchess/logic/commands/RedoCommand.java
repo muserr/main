@@ -30,9 +30,10 @@ public class RedoCommand extends Command {
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
         if (redoCounter > 1) {
-            while (redoCounter > 0 && storage.getRedoStack().size() > 0) {
+            int tempCounter = redoCounter;
+            while (tempCounter > 0 && storage.getRedoStack().size() > 0) {
                 setToNextStore(store, storage);
-                redoCounter--;
+                tempCounter--;
             }
         } else {
             setToNextStore(store, storage);
