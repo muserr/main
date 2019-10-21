@@ -25,8 +25,16 @@ public class Storage {
             = "Unable to read file, continuing with empty list.";
     private static final String FILE_WRITE_ERROR_MESSAGE
             = "An unexpected error occurred when writing to the file. ";
-
-    private static final String JSON_PARSE_ERROR_MESSAGE = "JSON parse was unsuccessful.";
+    private static final String JSON_PARSE_ERROR_MESSAGE
+            = "JSON parse was unsuccessful.";
+    private static final String UNSUCCESSFUL_MAP_ERROR_MESSAGE
+            = "Mapping was unsuccessful.";
+    private static final String EMPTY_STACK_ERROR_MESSAGE
+            = "There's nothing to redo.";
+    private static final String DUCHESS_STORAGE_ERROR_MESSAGE
+            = "Check duchess.storage input.";
+    private static final String STRING_TO_STORE_ERROR_MESSAGE
+            = "Unable to convert String to Store.";
 
     /**
      * Constructs Storage object.
@@ -93,7 +101,7 @@ public class Storage {
      */
     public Store getLastSnapshot(int undoCounter) throws DuchessException {
         if (undoStack.size() == 0) {
-            throw new DuchessException("There's nothing to undo.");
+            throw new DuchessException(EMPTY_STACK_ERROR_MESSAGE);
         }
 
         String jsonVal = undoStack.pollLast();
@@ -105,10 +113,10 @@ public class Storage {
             throw new DuchessException(JSON_PARSE_ERROR_MESSAGE);
         } catch (JsonMappingException e) {
             e.printStackTrace();
-            throw new DuchessException("Mapping was unsuccessful.");
+            throw new DuchessException(UNSUCCESSFUL_MAP_ERROR_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new DuchessException("Check duchess.storage input.");
+            throw new DuchessException(DUCHESS_STORAGE_ERROR_MESSAGE);
         }
     }
 
@@ -145,7 +153,7 @@ public class Storage {
      */
     public Store getFirstSnapshot() throws DuchessException {
         if (redoStack.size() == 0) {
-            throw new DuchessException("There's nothing to redo.");
+            throw new DuchessException(EMPTY_STACK_ERROR_MESSAGE);
         }
 
         String jsonVal = redoStack.pollFirst();
@@ -157,13 +165,13 @@ public class Storage {
             return store;
         } catch (JsonParseException e) {
             e.printStackTrace();
-            throw new DuchessException("JSON parse was unsuccessful.");
+            throw new DuchessException(JSON_PARSE_ERROR_MESSAGE);
         } catch (JsonMappingException e) {
             e.printStackTrace();
-            throw new DuchessException("Mapping was unsuccessful.");
+            throw new DuchessException(UNSUCCESSFUL_MAP_ERROR_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new DuchessException("Check duchess.storage input.");
+            throw new DuchessException(DUCHESS_STORAGE_ERROR_MESSAGE);
         }
     }
 
@@ -188,7 +196,7 @@ public class Storage {
                 return store;
 
             } catch (Exception e) {
-                System.out.println("Unable to convert String to Store.");
+                System.out.println(STRING_TO_STORE_ERROR_MESSAGE);
             }
         }
         return new Store();
