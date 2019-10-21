@@ -36,20 +36,20 @@ public class UndoCommand extends Command {
                 storage.addToRedoStack();
                 int tempCounter = undoCounter;
                 while (tempCounter > 0 && storage.getUndoStack().size() > 1) {
-                    setToPreviousStore(undoCounter, store, storage);
+                    setToPreviousStore(store, storage);
                     tempCounter--;
                 }
             } else if (undoCounter == 1) {
                 storage.addToRedoStack();
-                setToPreviousStore(undoCounter, store, storage);
+                setToPreviousStore(store, storage);
             }
         }
         // showUndo should only be placed after execution of undo.
         ui.showUndo(undoCounter);
     }
 
-    private void setToPreviousStore(int undoCounter, Store store, Storage storage) throws DuchessException {
-        storage.getLastSnapshot(undoCounter);
+    private void setToPreviousStore( Store store, Storage storage) throws DuchessException {
+        storage.getLastSnapshot();
         storage.save(storage.peekUndoStackAsStore());
 
         // Obtaining store from stack

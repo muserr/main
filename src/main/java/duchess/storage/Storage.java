@@ -28,8 +28,10 @@ public class Storage {
             = "JSON parse was unsuccessful.";
     private static final String UNSUCCESSFUL_MAP_ERROR_MESSAGE
             = "Mapping was unsuccessful.";
-    private static final String EMPTY_STACK_ERROR_MESSAGE
-            = "There's nothing to redo.";
+    private static final String EMPTY_REDO_STACK_ERROR_MESSAGE
+            = "Redo stack is empty.";
+    private static final String EMPTY_UNDO_STACK_ERROR_MESSAGE
+            = "Undo stack is empty.";
     private static final String DUCHESS_STORAGE_ERROR_MESSAGE
             = "Check duchess.storage input.";
     private static final String STRING_TO_STORE_ERROR_MESSAGE
@@ -98,13 +100,11 @@ public class Storage {
      * @return last Store object
      * @throws DuchessException throws exception when unable to obtain Store object
      */
-    public Store getLastSnapshot(int undoCounter) throws DuchessException {
+    public Store getLastSnapshot() throws DuchessException {
         if (undoStack.size() == 0) {
-            throw new DuchessException(EMPTY_STACK_ERROR_MESSAGE);
+            throw new DuchessException(EMPTY_UNDO_STACK_ERROR_MESSAGE);
         }
-
         String jsonVal = undoStack.pollLast();
-
         try {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
             return store;
@@ -152,9 +152,8 @@ public class Storage {
      */
     public Store getFirstSnapshot() throws DuchessException {
         if (redoStack.size() == 0) {
-            throw new DuchessException(EMPTY_STACK_ERROR_MESSAGE);
+            throw new DuchessException(EMPTY_REDO_STACK_ERROR_MESSAGE);
         }
-
         String jsonVal = redoStack.pollFirst();
         // Add this string to undoStack
         undoStack.addLast(jsonVal);
@@ -179,7 +178,7 @@ public class Storage {
     }
 
     public Deque<String> getRedoStack() {
-        return this.undoStack;
+        return this.redoStack;
     }
 
     /**
