@@ -33,9 +33,7 @@ public class AcademicYear {
     }
 
     private String getWeek(LocalDate comparison, LocalDate date) {
-        final double week = 7.0;
-        long daysBetween = ChronoUnit.DAYS.between(comparison, date) + 1;
-        int currWeek = (int) Math.ceil(daysBetween / week);
+        int currWeek = getWeekAsInt(comparison, date);
         if (currWeek == 7) {
             return ", Recess Week";
         } else if (currWeek >= 8 && currWeek <= 14) {
@@ -49,9 +47,26 @@ public class AcademicYear {
         }
     }
 
+    // Checks for breaks in a semester:
+    public boolean isSemesterBreak(int currWeek) {
+        if (currWeek == 7 || currWeek >= 15) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Returns week of semester.
+    public int getWeekAsInt(LocalDate comparison, LocalDate date) {
+        final double week = 7.0;
+        long daysBetween = ChronoUnit.DAYS.between(comparison, date) + 1;
+        int currWeek = (int) Math.ceil(daysBetween / week);
+        return currWeek;
+    }
+
     private String processInformation(LocalDate date) {
-        boolean isSemesterOne = date.compareTo(semOneStart) >= 0 && date.compareTo(semOneEnd) <= 0;
-        boolean isSemesterTwo = date.compareTo(semTwoStart) >= 0 && date.compareTo(semTwoEnd) <= 0;
+        boolean isSemesterOne = isFirstSemester(date);
+        boolean isSemesterTwo = isSecondSemester(date);
         boolean isSchoolTerm = isSemesterOne || isSemesterTwo;
         String str = "AY" + semOneStart.getYear() + "/" + semOneStart.plusYears(1).getYear();
         LocalDate comparison = null;
@@ -80,5 +95,31 @@ public class AcademicYear {
 
     public LocalDate getAcademicYearEnd() {
         return ayEnd;
+    }
+
+    public boolean isAcademicSemester(LocalDate date) {
+        boolean isSemesterOne = isFirstSemester(date);
+        boolean isSemesterTwo = isSecondSemester(date);
+        return isSemesterOne || isSemesterTwo;
+    }
+
+    // jk
+    public boolean isFirstSemester(LocalDate date) {
+        return date.compareTo(semOneStart) >= 0 && date.compareTo(semOneEnd) <= 0;
+    }
+
+    // jk
+    public boolean isSecondSemester(LocalDate date) {
+        return date.compareTo(semTwoStart) >= 0 && date.compareTo(semTwoEnd) <= 0;
+    }
+
+    // jk
+    public LocalDate getSemOneStart() {
+        return semOneStart;
+    }
+
+    // jk
+    public LocalDate getSemTwoStart() {
+        return semTwoStart;
     }
 }

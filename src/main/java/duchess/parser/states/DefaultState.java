@@ -6,8 +6,6 @@ import duchess.logic.commands.AddGradeCommand;
 import duchess.logic.commands.AddTodoCommand;
 import duchess.logic.commands.ByeCommand;
 import duchess.logic.commands.Command;
-import duchess.logic.commands.DeleteModuleCommand;
-import duchess.logic.commands.DeleteTaskCommand;
 import duchess.logic.commands.DisplayCalendarCommand;
 import duchess.logic.commands.DisplayCommand;
 import duchess.logic.commands.DoneCommand;
