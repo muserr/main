@@ -9,6 +9,7 @@ import duchess.logic.commands.Command;
 import duchess.logic.commands.DeleteModuleCommand;
 import duchess.logic.commands.DeleteTaskCommand;
 import duchess.logic.commands.DisplayCalendarCommand;
+import duchess.logic.commands.DisplayCommand;
 import duchess.logic.commands.DoneCommand;
 import duchess.logic.commands.ExportCommand;
 import duchess.logic.commands.FindCommand;
@@ -20,6 +21,7 @@ import duchess.logic.commands.UndoCommand;
 import duchess.logic.commands.ViewScheduleCommand;
 import duchess.parser.Parser;
 import duchess.parser.Util;
+import duchess.parser.commands.DeleteCommandParser;
 import duchess.parser.commands.ListCommandParser;
 import duchess.parser.states.add.AddState;
 
@@ -48,36 +50,23 @@ public class DefaultState implements ParserState {
         List<String> arguments = words.subList(1, words.size());
         Map<String, String> parameters = Util.parameterize(input);
 
-        switch (keyword) {
-        case "list":
+        if ("list".equals(keyword)) {
             return ListCommandParser.parse(parameters);
-        case "add":
+        } else if ("add".equals(keyword)) {
             return this.parser
                     .setParserState(new AddState(this.parser))
                     .continueParsing(parameters);
-        case "find":
+        } else if ("find".equals(keyword)) {
             return new FindCommand(arguments);
-        case "delete":
-            try {
-                String secondKeyword = words.get(1);
-                switch (secondKeyword) {
-                case "task":
-                    return new DeleteTaskCommand(arguments);
-                case "module":
-                    return new DeleteModuleCommand(arguments);
-                default:
-                    throw new IllegalArgumentException();
-                }
-            } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
-                throw new DuchessException("Usage: delete (module|task) <number>");
-            }
-        case "done":
+        } else if ("delete".equals(keyword)) {
+            return DeleteCommandParser.parse(parameters);
+        } else if ("done".equals(keyword)) {
             try {
                 return new DoneCommand(Integer.parseInt(words.get(0)) - 1);
             } catch (NumberFormatException e) {
                 throw new DuchessException("Please supply a number. Eg: done 2");
             }
-        case "todo":
+        } else if ("todo".equals(keyword)) {
             if (arguments.size() == 0) {
                 throw new DuchessException("Format for todo: todo <task>");
             }
@@ -89,7 +78,7 @@ public class DefaultState implements ParserState {
                 String description = String.join(" ", arguments);
                 return new AddTodoCommand(description);
             }
-        case "deadline":
+        } else if ("deadline".equals(keyword)) {
             int separatorIndex = arguments.indexOf("/by");
             if (arguments.size() == 0 || separatorIndex <= 0) {
                 throw new DuchessException("Format for deadline: deadline <task> /by <deadline>");
@@ -106,11 +95,11 @@ public class DefaultState implements ParserState {
                         .parseDateTime(arguments, separatorIndex + 1);
                 return new AddDeadlineCommand(description, deadline);
             }
-        case "reminder":
+        } else if ("reminder".equals(keyword)) {
             return new ReminderCommand();
-        case "snooze":
+        } else if ("snooze".equals(keyword)) {
             return new SnoozeCommand(arguments);
-        case "schedule":
+        } else if ("schedule".equals(keyword)) {
             try {
                 String view = words.get(2);
                 boolean isInvalidView = !view.equals("day") && !view.equals("week");
@@ -123,17 +112,17 @@ public class DefaultState implements ParserState {
             } catch (IndexOutOfBoundsException e) {
                 throw new DuchessException("Usage: schedule <date> (day | week)");
             }
-        case "calendar":
+        } else if ("calendar".equals(keyword)) {
             if (words.size() != 2) {
                 throw new DuchessException("Usage: calendar <date>");
             }
             return new DisplayCalendarCommand(Util.parseToWeekDates(Util.parseDate(words.get(1))));
-        case "export":
+        } else if ("export".equals(keyword)) {
             if (words.size() != 2) {
                 throw new DuchessException("Usage: export <date>");
             }
             return new ExportCommand(Util.parseToWeekDates(Util.parseDate(words.get(1))));
-        case "grade":
+        } else if ("grade".equals(keyword)) {
             try {
                 List<String> score = Arrays.asList(parameters.get("general").split("\\\\"));
                 int marks = Integer.parseInt(score.get(0));
@@ -147,15 +136,17 @@ public class DefaultState implements ParserState {
                 throw new DuchessException("Usage: grade <marks> /weightage <weightage> /for <module> <assessment>\n"
                         + "\te.g. grade 15\\30 /weightage 25 /for CS2113 midterm");
             }
-        case "bye":
+        } else if ("bye".equals(keyword)) {
             return new ByeCommand();
-        case "log":
+        } else if ("log".equals(keyword)) {
             return new LogCommand();
-        case "undo":
+        } else if ("undo".equals(keyword)) {
             return new UndoCommand(arguments);
-        case "redo":
+        } else if ("redo".equals(keyword)) {
             return new RedoCommand(arguments);
-        default:
+        } else if ("exit".equals(keyword)) {
+            return new DisplayCommand("Operation aborted.");
+        } else {
             throw new DuchessException("Please enter a valid command.");
         }
     }
