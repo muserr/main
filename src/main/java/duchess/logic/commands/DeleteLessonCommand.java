@@ -43,14 +43,6 @@ public class DeleteLessonCommand extends Command {
             }
         }
 
-        for (Integer index : toDelete) {
-            // System.out.println("Index == " + index);
-            // store.getTaskList().remove(index);
-            //store.getTaskList().remove(integer);
-        }
-
-        ui.showTaskList(store.getTaskList());
-
         if (isDeleted) {
             ui.showDeletedLesson(moduleCode);
         } else {
