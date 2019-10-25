@@ -47,7 +47,13 @@ public class AcademicYear {
         }
     }
 
-    // Checks for breaks in a semester:
+    /**
+     * Returns true if currWeek falls within semester break
+     * and false if currWeek does not fall within semester break.
+     *
+     * @param currWeek week of interest
+     * @return boolean showing if currWeek falls within semester break
+     */
     public boolean isSemesterBreak(int currWeek) {
         if (currWeek == 7 || currWeek >= 15) {
             return true;
@@ -56,7 +62,13 @@ public class AcademicYear {
         }
     }
 
-    // Returns week of semester.
+    /**
+     * Returns a week as integer value within a school semester.
+     *
+     * @param comparison comparison date
+     * @param date interested date
+     * @return integer value representing week
+     */
     public int getWeekAsInt(LocalDate comparison, LocalDate date) {
         final double week = 7.0;
         long daysBetween = ChronoUnit.DAYS.between(comparison, date) + 1;
@@ -97,6 +109,12 @@ public class AcademicYear {
         return ayEnd;
     }
 
+    /**
+     * Returns boolean showing if date falls within an academic semester.
+     *
+     * @param date interested date
+     * @return boolean showing if date is within an academic semester
+     */
     public boolean isAcademicSemester(LocalDate date) {
         boolean isSemesterOne = isFirstSemester(date);
         boolean isSemesterTwo = isSecondSemester(date);

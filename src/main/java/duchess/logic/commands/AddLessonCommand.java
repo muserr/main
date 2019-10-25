@@ -13,10 +13,6 @@ import java.time.LocalDateTime;
 
 /**
  * Adds recurring lessons.
- *
- * lesson /add <module-code> /type <class-description>
- * /time <start_date> <start_time> /to <end_date> <end_time>
- *
  */
 public class AddLessonCommand extends Command {
     private String description;
@@ -32,6 +28,14 @@ public class AddLessonCommand extends Command {
     private final String invalidModuleCode
             = "Unrecognized module code, add module first before assigning lessons.";
 
+    /**
+     * Constructor to add lessons.
+     *
+     * @param description lesson description
+     * @param start start date and time
+     * @param end end date and time
+     * @param moduleCode module code of lesson
+     */
     public AddLessonCommand(String description, LocalDateTime start, LocalDateTime end, String moduleCode) {
         this.description = description + " (" + moduleCode + ")";
         this.start = start;

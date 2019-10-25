@@ -12,6 +12,13 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class LessonCommandParser {
+    /**
+     * Returns a command to add lessons based on user input.
+     *
+     * @param parameters processed user input
+     * @return the command to execute
+     * @throws DuchessException if the user input is invalid
+     */
     public static Command parse(Map<String, String> parameters) throws DuchessException {
         String description = parameters.get("type");
         String moduleCode = parameters.get("add");

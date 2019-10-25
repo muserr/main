@@ -137,9 +137,6 @@ public class DefaultState implements ParserState {
                         + "\te.g. grade 15\\30 /weightage 25 /for CS2113 midterm");
             }
         } else if ("lesson".equals(keyword)) {
- // lesson /add <module-code> /type <class-description>
- //    /time <start_date> <start_time> /to <end_date> <end_time>
-            //return new AddLessonCommand(keyword);
             return LessonCommandParser.parse(parameters);
         } else if ("bye".equals(keyword)) {
             return new ByeCommand();
