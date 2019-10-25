@@ -9,7 +9,6 @@ import java.util.Map;
 public class DeleteLessonCommandParser {
     /**
      * Returns a command to delete lessons based on user input.
-     * ldelete /type <lesson-type> /code <code>
      *
      * @param parameters processed user input
      * @return the command to execute

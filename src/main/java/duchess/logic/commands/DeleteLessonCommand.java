@@ -15,6 +15,12 @@ public class DeleteLessonCommand extends Command {
     private String moduleCode;
     private String lessonDelete;
 
+    /**
+     * Constructor for DeleteLessonCommand.
+     *
+     * @param type lesson type
+     * @param moduleCode module code
+     */
     public DeleteLessonCommand(String type, String moduleCode) {
         this.type = type;
         this.moduleCode = moduleCode;
