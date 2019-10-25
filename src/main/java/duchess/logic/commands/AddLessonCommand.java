@@ -29,6 +29,8 @@ public class AddLessonCommand extends Command {
     private final int studyWeeks = 15;
     private final String invalidStartDate
             = "Invalid start date, start date provided must be within a semester.";
+    private final String invalidModuleCode
+            = "Unrecognized module code, add module first before assigning lessons.";
 
     public AddLessonCommand(String description, LocalDateTime start, LocalDateTime end, String moduleCode) {
         this.description = description + " (" + moduleCode + ")";
@@ -43,8 +45,12 @@ public class AddLessonCommand extends Command {
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
         AcademicYear academicYear = new AcademicYear();
-        // check if startDate is within AY. If not throw exception.
-        if (!academicYear.isAcademicSemester(this.startDate)) {
+
+        if (store.findModuleByCode(moduleCode).isEmpty()) {
+            // Throws an exception if module was not present before.
+            throw new DuchessException(invalidModuleCode);
+        } else if (!academicYear.isAcademicSemester(this.startDate)) {
+            // Throws an exception if startDate is not within semester.
             throw new DuchessException(invalidStartDate);
         } else {
             // While AY not ended, and !recess_week && !reading_week. Add event.
