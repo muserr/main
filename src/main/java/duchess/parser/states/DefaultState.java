@@ -3,10 +3,10 @@ package duchess.parser.states;
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.AddDeadlineCommand;
 import duchess.logic.commands.AddGradeCommand;
-import duchess.logic.commands.AddLessonCommand;
 import duchess.logic.commands.AddTodoCommand;
 import duchess.logic.commands.ByeCommand;
 import duchess.logic.commands.Command;
+import duchess.logic.commands.DeleteLessonCommand;
 import duchess.logic.commands.DisplayCalendarCommand;
 import duchess.logic.commands.DisplayCommand;
 import duchess.logic.commands.DoneCommand;
@@ -21,6 +21,7 @@ import duchess.logic.commands.ViewScheduleCommand;
 import duchess.parser.Parser;
 import duchess.parser.Util;
 import duchess.parser.commands.DeleteCommandParser;
+import duchess.parser.commands.DeleteLessonCommandParser;
 import duchess.parser.commands.LessonCommandParser;
 import duchess.parser.commands.ListCommandParser;
 import duchess.parser.states.add.AddState;
@@ -60,6 +61,8 @@ public class DefaultState implements ParserState {
             return new FindCommand(arguments);
         } else if ("delete".equals(keyword)) {
             return DeleteCommandParser.parse(parameters);
+        } else if ("ldelete".equals(keyword)) {
+            return DeleteLessonCommandParser.parse(parameters);
         } else if ("done".equals(keyword)) {
             try {
                 return new DoneCommand(Integer.parseInt(words.get(0)) - 1);
