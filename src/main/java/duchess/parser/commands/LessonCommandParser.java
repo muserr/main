@@ -5,14 +5,18 @@ import duchess.logic.commands.Command;
 import duchess.logic.commands.DeleteModuleCommand;
 import duchess.logic.commands.DeleteTaskCommand;
 import duchess.parser.Parser;
+import duchess.parser.Util;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class LessonCommandParser {
     public static Command parse(Map<String, String> parameters) throws DuchessException {
         try {
-            String type = parameters.get("add");
-            int number = Integer.parseInt(parameters.get("no"));
+            String moduleCode = parameters.get("add");
+            String type = parameters.get("type");
+            LocalDateTime startTimeString = Util.parseDateTime(parameters.get("time"));
+            LocalDateTime endTimeString = Util.parseDateTime(parameters.get("to"));
 
             if (type.equals(Parser.TASK_KEYWORD)) {
                 return new DeleteTaskCommand(number);
