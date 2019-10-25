@@ -138,26 +138,8 @@ public class DefaultState implements ParserState {
         } else if ("lesson".equals(keyword)) {
  // lesson /add <module-code> /type <class-description>
  //    /time <start_date> <start_time> /to <end_date> <end_time>
-            arguments;
-            int separatorIndexA = arguments.indexOf("/add");
-            int separatorIndexB = arguments.indexOf("/type");
-
-            if (arguments.size() == 0 || separatorIndex <= 0) {
-                throw new DuchessException("Format for deadline: deadline <task> /by <deadline>");
-            }
-            if (arguments.get(arguments.size() - 1).charAt(0) == '#') {
-                String description = String.join(" ", arguments.subList(0, separatorIndex));
-                LocalDateTime deadline = Util
-                        .parseDateTime(arguments.subList(0, arguments.size() - 1), separatorIndex + 1);
-                String moduleCode = arguments.get(arguments.size() - 1).substring(1);
-                return new AddDeadlineCommand(description, deadline, moduleCode);
-            } else {
-                String description = String.join(" ", arguments.subList(0, separatorIndex));
-                LocalDateTime deadline = Util
-                        .parseDateTime(arguments, separatorIndex + 1);
-                return new AddDeadlineCommand(description, deadline);
-            }
-            return new AddLessonCommand(keyword);
+            //return new AddLessonCommand(keyword);
+            return ListCommandParser.parse(parameters);
         } else if ("bye".equals(keyword)) {
             return new ByeCommand();
         } else if ("log".equals(keyword)) {
