@@ -21,6 +21,7 @@ import duchess.logic.commands.ViewScheduleCommand;
 import duchess.parser.Parser;
 import duchess.parser.Util;
 import duchess.parser.commands.DeleteCommandParser;
+import duchess.parser.commands.LessonCommandParser;
 import duchess.parser.commands.ListCommandParser;
 import duchess.parser.states.add.AddState;
 
@@ -139,7 +140,7 @@ public class DefaultState implements ParserState {
  // lesson /add <module-code> /type <class-description>
  //    /time <start_date> <start_time> /to <end_date> <end_time>
             //return new AddLessonCommand(keyword);
-            return ListCommandParser.parse(parameters);
+            return LessonCommandParser.parse(parameters);
         } else if ("bye".equals(keyword)) {
             return new ByeCommand();
         } else if ("log".equals(keyword)) {
