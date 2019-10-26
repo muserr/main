@@ -9,10 +9,10 @@ import java.util.List;
 
 public class UndoCommand extends Command {
     private int undoCounter;
-    private String UNDO_USAGE_ERROR_MESSAGE = "Usage: undo [number]";
-    private String NEGATIVE_NUMBER_ERROR_MESSAGE
+    private static final String UNDO_USAGE_ERROR_MESSAGE = "Usage: undo [number]";
+    private static final String NEGATIVE_NUMBER_ERROR_MESSAGE
             = "[number] must be a positive integer, i.e. 1, 2, 3, ...";
-    private String INVALID_NUMBER_ERROR_MESSAGE
+    private static final String INVALID_NUMBER_ERROR_MESSAGE
             = "You have entered an invalid value.";
 
     /**

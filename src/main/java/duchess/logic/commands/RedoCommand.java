@@ -9,10 +9,10 @@ import java.util.List;
 
 public class RedoCommand extends Command {
     private int redoCounter;
-    private String REDO_USAGE_ERROR_MESSAGE = "Usage: redo [number]";
-    private String NEGATIVE_NUMBER_ERROR_MESSAGE
+    private static final String REDO_USAGE_ERROR_MESSAGE = "Usage: redo [number]";
+    private static final String NEGATIVE_NUMBER_ERROR_MESSAGE
             = "[number] must be a positive integer, i.e. 1, 2, 3, ...";
-    private String INVALID_NUMBER_ERROR_MESSAGE
+    private static final String INVALID_NUMBER_ERROR_MESSAGE
             = "You have entered an invalid value.";
 
     /**
