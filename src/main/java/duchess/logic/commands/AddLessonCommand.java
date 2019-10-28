@@ -90,7 +90,7 @@ public class AddLessonCommand extends Command {
         Event task = new Event(description, endCopy, startCopy);
         if (!store.isClashing(task)) {
             store.getTaskList().add(task);
-            ui.showTaskAdded(store.getTaskList(), task);
+            //ui.showTaskAdded(store.getTaskList(), task);
             store.setDuchessCalendar(CalendarManager.addEntry(store.getDuchessCalendar(), task));
             storage.save(store);
         }
