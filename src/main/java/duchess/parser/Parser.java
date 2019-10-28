@@ -27,8 +27,8 @@ public class Parser {
     public static final String LIST_USAGE =
             "Usage: list (tasks | modules | grades /module <module_code>)";
     public static final String DELETE_USAGE =
-            "Usage: delete (task | module) /no <number> " +
-                    "OR delete (lesson) /type <lesson_type> /code <module_code>";
+            "Usage: delete (task | module) /no <number> "
+                    + "OR delete (lesson) /type <lesson_type> /code <module_code>";
 
     /**
      * Prompts.

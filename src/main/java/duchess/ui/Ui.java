@@ -440,7 +440,7 @@ public class Ui {
     }
 
     /**
-     * Displays a message stating lessons of a module have been deleted
+     * Displays a message stating lessons of a module have been deleted.
      *
      * @param moduleCode module code of required module
      */
