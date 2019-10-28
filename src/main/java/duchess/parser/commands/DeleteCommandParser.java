@@ -2,6 +2,7 @@ package duchess.parser.commands;
 
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.Command;
+import duchess.logic.commands.DeleteLessonCommand;
 import duchess.logic.commands.DeleteModuleCommand;
 import duchess.logic.commands.DeleteTaskCommand;
 import duchess.parser.Parser;
@@ -19,12 +20,17 @@ public class DeleteCommandParser {
     public static Command parse(Map<String, String> parameters) throws DuchessException {
         try {
             String type = parameters.get("general");
-            int number = Integer.parseInt(parameters.get("no"));
 
             if (type.equals(Parser.TASK_KEYWORD)) {
+                int number = Integer.parseInt(parameters.get("no"));
                 return new DeleteTaskCommand(number);
             } else if (type.equals(Parser.MODULE_KEYWORD)) {
+                int number = Integer.parseInt(parameters.get("no"));
                 return new DeleteModuleCommand(number);
+            } else if (type.equals(Parser.LESSON_KEYWORD)) {
+                String moduleCode = parameters.get("type");
+                String  lessonType = parameters.get("code");
+                return new DeleteLessonCommand(lessonType, moduleCode);
             } else {
                 throw new IllegalArgumentException();
             }
