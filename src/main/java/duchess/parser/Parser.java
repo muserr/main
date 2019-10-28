@@ -20,6 +20,7 @@ public class Parser {
     public static final String TASK_KEYWORD = "task";
     public static final String MODULE_KEYWORD = "module";
     public static final String LESSON_KEYWORD = "lesson";
+    public static final String GRADE_KEYWORD = "grade";
 
     /**
      * Usage for commands.
@@ -27,8 +28,8 @@ public class Parser {
     public static final String LIST_USAGE =
             "Usage: list (tasks | modules | grades /module <module_code>)";
     public static final String DELETE_USAGE =
-            "Usage: delete (task | module) /no <number> "
-                    + "OR delete (lesson) /type <lesson_type> /code <module_code>";
+            "Usage: delete (task | module | grade /module <module_code>) /no <number>"
+                    + "\n    Usage: delete (lesson) /type <lesson_type> /code <module_code>";
 
     /**
      * Prompts.
@@ -45,7 +46,7 @@ public class Parser {
             "When does %s start? (dd/mm/yyyy hhmm)";
     public static final String EVENT_END_PROMPT =
             "When does %s end? (dd/mm/yyyy hhmm)";
-    public static final String EVENT_MODULE_PROMPT =
+    public static final String TASK_MODULE_PROMPT =
             "What module is %s for? (enter 'nil' to skip)";
     public static final String GRADE_MODULE_PROMPT =
             "What module is %s for? (e.g CS1231)";
@@ -55,6 +56,18 @@ public class Parser {
             "What's the name of the assessment? (e.g midterm)";
     public static final String GRADE_WEIGHTAGE_PROMPT =
             "What's the weightage of %s?";
+    public static final String DEADLINE_DESCRIPTION_PROMPT =
+            "What's the name of the deadline?";
+    public static final String DEADLINE_DEADLINE_PROMPT =
+            "When is %s due?";
+    public static final String TODO_DESCRIPTION_PROMPT =
+            "What's the to-do about?";
+
+    /**
+     * Error messages.
+     */
+    public static final String PARSING_ERROR_MESSAGE =
+            "An unexpected error occurred while processing your command.";
 
     private ParserState parserState;
 

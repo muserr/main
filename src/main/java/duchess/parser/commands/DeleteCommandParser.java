@@ -3,6 +3,7 @@ package duchess.parser.commands;
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.Command;
 import duchess.logic.commands.DeleteLessonCommand;
+import duchess.logic.commands.DeleteGradeCommand;
 import duchess.logic.commands.DeleteModuleCommand;
 import duchess.logic.commands.DeleteTaskCommand;
 import duchess.parser.Parser;
@@ -32,6 +33,13 @@ public class DeleteCommandParser {
                 String lessonType = parameters.get("type");
                 String moduleCode = parameters.get("code");
                 return new DeleteLessonCommand(lessonType, moduleCode);
+            } else if (type.equals(Parser.GRADE_KEYWORD)) {
+                int number = Integer.parseInt(parameters.get("no"));
+                String moduleCode = parameters.get(Parser.MODULE_KEYWORD);
+                if (moduleCode == null) {
+                    throw new IllegalArgumentException();
+                }
+                return new DeleteGradeCommand(moduleCode, number);
             } else {
                 throw new IllegalArgumentException();
             }
