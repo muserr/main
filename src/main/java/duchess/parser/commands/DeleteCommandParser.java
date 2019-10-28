@@ -28,13 +28,14 @@ public class DeleteCommandParser {
                 int number = Integer.parseInt(parameters.get("no"));
                 return new DeleteModuleCommand(number);
             } else if (type.equals(Parser.LESSON_KEYWORD)) {
-                String moduleCode = parameters.get("type");
-                String  lessonType = parameters.get("code");
+
+                String lessonType = parameters.get("type");
+                String moduleCode = parameters.get("code");
                 return new DeleteLessonCommand(lessonType, moduleCode);
             } else {
                 throw new IllegalArgumentException();
             }
-        } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+        } catch (IndexOutOfBoundsException | IllegalArgumentException | NullPointerException e) {
             throw new DuchessException(Parser.DELETE_USAGE);
         }
     }
