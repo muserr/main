@@ -167,8 +167,8 @@ public class StorageTest {
     public void addToUndoStackPush_consecutiveRepeatedStore_unsuccessful() {
         try {
             Storage storage = new Storage(nonEmptyTestFilePath);
-            Store storeA = new Store();
-            Store storeB = new Store();
+            final Store storeA = new Store();
+            final Store storeB = new Store();
 
             assertTrue(storage.getUndoStack().size() == 0);
             assertTrue(storeA != null);
@@ -189,8 +189,8 @@ public class StorageTest {
     public void getLastSnapshot_success() {
         try {
             Storage storage = new Storage(nonEmptyTestFilePath);
-            Store storeA = storage.load();
-            Store storeB = new Store();
+            final Store storeA = storage.load();
+            final Store storeB = new Store();
 
             final Task taskA = new Todo("Star jumps");
             final Task taskB = new Todo("Jogging with friends.");
