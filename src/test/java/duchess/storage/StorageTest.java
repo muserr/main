@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
-    final String emptyTestFilePath = "testEmptyData.json";
-    final String nonEmptyTestFilePath = "testNonEmptyData.json";
-    final String blankTestFilePath = "testBlankData.json";
+    private final String emptyTestFilePath = "testEmptyData.json";
+    private final String nonEmptyTestFilePath = "testNonEmptyData.json";
+    private final String blankTestFilePath = "testBlankData.json";
 
     private final String unreadableFileMessage
             = "Unable to read file, continuing with empty list.";
