@@ -215,6 +215,39 @@ public class StorageTest {
         }
     }
 
+    @Test
+    public void getFirstSnapshot_success() {
+        try {
+            Storage storage = new Storage(nonEmptyTestFilePath);
+            Store storeA = storage.load();
+            Store storeB = new Store();
+
+            final Task taskA = new Todo("Star jumps");
+            final Task taskB = new Todo("Jogging with friends.");
+            storeB.getTaskList().add(taskA);
+            storeB.getTaskList().add(taskB);
+
+            storage.addToUndoStackPush(storeA);
+            storage.addToUndoStackPush(storeB);
+            assertTrue(storage.getUndoStack().size() == 2);
+            assertTrue(storage.getRedoStack().size() == 0);
+
+            storage.addToRedoStack();
+            assertTrue(storage.getRedoStack().size() == 1);
+            assertTrue(storage.getUndoStack().size() == 2);
+
+            // Obtain first object in redoStack.
+            Store testStore = storage.getFirstSnapshot();
+            assertNotEquals(testStore, null);
+
+            assertTrue(storage.getRedoStack().size() == 0);
+            assertEquals(getStoreToString(testStore),getStoreToString(storeB));
+
+        } catch (DuchessException | ClassCastException e) {
+            assertEquals(e.getMessage(), unreadableFileMessage);
+        }
+    }
+
     private String getStoreToString(Store store) {
         String jsonVal;
         try {
