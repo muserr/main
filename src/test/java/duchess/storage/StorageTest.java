@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import duchess.exceptions.DuchessException;
+import duchess.model.task.Task;
+import duchess.model.task.Todo;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -182,17 +184,56 @@ public class StorageTest {
             assertEquals(e.getMessage(), unreadableFileMessage);
         }
     }
-// WILL BE EMPTY FOR NOW
-    //@Test
-    //public void getFirstSnapshot_emptyFile_noExceptionThrown() {
-    //    Storage storage = new Storage(nonEmptyTestFilePath);
-    //    try {
-    //        Store store = storage.getFirstSnapshot();
-    //        assertEquals(store, null);
-    //        System.out.println("SUCESS");
-    //    } catch (DuchessException e) {
-    //        System.out.println("Problem");
-    //        assertEquals(e.getMessage(), emptyRedoStackErrorMessage);
-    //    }
-    //}
+
+    @Test
+    public void getLastSnapshot_success() {
+        try {
+            Storage storage = new Storage(nonEmptyTestFilePath);
+            Store storeA = storage.load();
+            Store storeB = new Store();
+
+            final Task taskA = new Todo("Star jumps");
+            final Task taskB = new Todo("Jogging with friends.");
+            storeB.getTaskList().add(taskA);
+            storeB.getTaskList().add(taskB);
+
+            assertTrue(storage.getUndoStack().size() == 0);
+            storage.addToUndoStackPush(storeA);
+            assertTrue(storage.getUndoStack().size() == 1);
+            storage.addToUndoStackPush(storeB);
+            assertTrue(storage.getUndoStack().size() == 2);
+
+            Store testStore = storage.getLastSnapshot();
+            assertNotEquals(testStore, null);
+
+            assertTrue(storage.getUndoStack().size() == 1);
+            assertEquals(getStoreToString(testStore),getStoreToString(storeB));
+            assertTrue(storage.getUndoStack().size() == 1);
+
+        } catch (DuchessException | ClassCastException e) {
+            assertEquals(e.getMessage(), unreadableFileMessage);
+        }
+    }
+
+    private String getStoreToString(Store store) {
+        String jsonVal;
+        try {
+            jsonVal = getObjectMapper().writeValueAsString(store);
+        } catch (JsonProcessingException e) {
+            jsonVal = new String();
+            assert (jsonVal.equals(""));
+        }
+        return jsonVal;
+    }
+
+    private ObjectMapper getObjectMapper() {
+        return new ObjectMapper()
+                .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
+                .disable(MapperFeature.AUTO_DETECT_CREATORS,
+                        MapperFeature.AUTO_DETECT_FIELDS,
+                        MapperFeature.AUTO_DETECT_GETTERS,
+                        MapperFeature.AUTO_DETECT_IS_GETTERS)
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 }
