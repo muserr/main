@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StoreTest {
-    private final String INVALID_FORMAT_MESSAGE = "Please enter dates in the format dd/mm/yyyy hhmm";
+    private final String invalidFormatMessage = "Please enter dates in the format dd/mm/yyyy hhmm";
 
     @Test
     public void returnTaskList_emptyTaskList_success() {
@@ -55,12 +55,12 @@ public class StoreTest {
         String endDateTime = "04/11/2019 1800";
 
         try {
-            Task taskA = new Todo("Star jumps");
-            Task taskB = new Todo("Jogging with friends.");
+            final Task taskA = new Todo("Star jumps");
+            final Task taskB = new Todo("Jogging with friends.");
 
-            Task taskC = new Event("Running"
-                    , Util.parseDateTime(endDateTime)
-                    , Util.parseDateTime(startDateTime));
+            final Task taskC = new Event("Running",
+                    Util.parseDateTime(endDateTime),
+                    Util.parseDateTime(startDateTime));
 
             assertTrue(store.getTaskList().size() == 0);
 
@@ -70,7 +70,7 @@ public class StoreTest {
             assertFalse(store.isClashing(taskB));
 
         } catch (DuchessException | DateTimeParseException | IndexOutOfBoundsException e) {
-            assertEquals(e.getMessage(), INVALID_FORMAT_MESSAGE);
+            assertEquals(e.getMessage(), invalidFormatMessage);
         }
     }
 
@@ -81,13 +81,13 @@ public class StoreTest {
         String endDateTime = "04/11/2019 1800";
 
         try {
-            Task taskA = new Event("Running"
-                    , Util.parseDateTime(endDateTime)
-                    , Util.parseDateTime(startDateTime));
+            final Task taskA = new Event("Running",
+                    Util.parseDateTime(endDateTime),
+                    Util.parseDateTime(startDateTime));
 
-            Task taskB = new Event("Jogging"
-                    , Util.parseDateTime(endDateTime)
-                    , Util.parseDateTime(startDateTime));
+            final Task taskB = new Event("Jogging",
+                    Util.parseDateTime(endDateTime),
+                    Util.parseDateTime(startDateTime));
 
             assertTrue(store.getTaskList().size() == 0);
             store.getTaskList().add(taskA);
@@ -96,15 +96,15 @@ public class StoreTest {
             assertTrue(store.isClashing(taskB));
 
         } catch (DuchessException | DateTimeParseException | IndexOutOfBoundsException e) {
-            assertEquals(e.getMessage(), INVALID_FORMAT_MESSAGE);
+            assertEquals(e.getMessage(), invalidFormatMessage);
         }
     }
 
     @Test
     public void findModuleByCode_validCodeString_nonNullOptionalValue() {
         Store store = new Store();
-        Module moduleA = new Module("CS1231", "Discrete Mathematics");
-        Module moduleB = new Module("CS2113T", "Software Engineering");
+        final Module moduleA = new Module("CS1231", "Discrete Mathematics");
+        final Module moduleB = new Module("CS2113T", "Software Engineering");
 
         store.getModuleList().add(moduleA);
         store.getModuleList().add(moduleB);
@@ -116,8 +116,8 @@ public class StoreTest {
     @Test
     public void findModuleByCode_inValidCodeString_nullOptionalValue() {
         Store store = new Store();
-        Module moduleA = new Module("CS1231", "Discrete Mathematics");
-        Module moduleB = new Module("CS2113T", "Software Engineering");
+        final Module moduleA = new Module("CS1231", "Discrete Mathematics");
+        final Module moduleB = new Module("CS2113T", "Software Engineering");
 
         store.getModuleList().add(moduleA);
         store.getModuleList().add(moduleB);
@@ -134,12 +134,12 @@ public class StoreTest {
         String endDateTime = "04/11/2019 1800";
 
         try {
-            Task taskA = new Todo("Star jumps");
-            Task taskB = new Todo("Jogging with friends.");
+            final Task taskA = new Todo("Star jumps");
+            final Task taskB = new Todo("Jogging with friends.");
 
-            Task taskC = new Event("Running"
-                    , Util.parseDateTime(endDateTime)
-                    , Util.parseDateTime(startDateTime));
+            final Task taskC = new Event("Running",
+                    Util.parseDateTime(endDateTime),
+                    Util.parseDateTime(startDateTime));
 
             assertTrue(store.getTaskList().size() == 0);
 
@@ -155,7 +155,7 @@ public class StoreTest {
             assertEquals(testTaskList, store.getTaskList());
 
         } catch (DuchessException | DateTimeParseException | IndexOutOfBoundsException e) {
-            assertEquals(e.getMessage(), INVALID_FORMAT_MESSAGE);
+            assertEquals(e.getMessage(), invalidFormatMessage);
         }
     }
 
@@ -164,10 +164,10 @@ public class StoreTest {
         Store store = new Store();
         List<Module> testModuleList = new ArrayList<>();
 
-        Module moduleA = new Module("CS1231", "Discrete Mathematics");
-        Module moduleB = new Module("CS2113T", "Software Engineering");
-        Module moduleC = new Module("CG2028", "Computer Organization");
-        Module moduleD = new Module("CG2027", "Transistor Level Digital Circuits");
+        final Module moduleA = new Module("CS1231", "Discrete Mathematics");
+        final Module moduleB = new Module("CS2113T", "Software Engineering");
+        final Module moduleC = new Module("CG2028", "Computer Organization");
+        final Module moduleD = new Module("CG2027", "Transistor Level Digital Circuits");
 
         assertTrue(store.getTaskList().size() == 0);
 
@@ -190,9 +190,9 @@ public class StoreTest {
         List<CalendarEntry> testDuchessCalendar = new ArrayList<>();
 
         try {
-            CalendarEntry entryA = new CalendarEntry(Util.parseDate("03/11/2019"), new ArrayList<Task>());
-            CalendarEntry entryB = new CalendarEntry(Util.parseDate("04/11/2019"), new ArrayList<Task>());
-            CalendarEntry entryC = new CalendarEntry(Util.parseDate("06/11/2019"), new ArrayList<Task>());
+            final CalendarEntry entryA = new CalendarEntry(Util.parseDate("03/11/2019"), new ArrayList<>());
+            final CalendarEntry entryB = new CalendarEntry(Util.parseDate("04/11/2019"), new ArrayList<>());
+            final CalendarEntry entryC = new CalendarEntry(Util.parseDate("06/11/2019"), new ArrayList<>());
 
             assertTrue(store.getTaskList().size() == 0);
 
