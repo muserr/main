@@ -20,5 +20,8 @@ text_file
 
 /data.json
 
-testData.json
-/testData.json
+testEmptyData.json
+/testEmptyData.json
+
+testNonEmptyData.json
+/testNonEmptyData.json
