@@ -34,11 +34,7 @@ public class StorageTest {
         try {
             Storage storage = new Storage(nonEmptyTestFilePath);
             Store store = storage.load();
-            String temp = storage.getStoreToString(store);
-            System.out.println("TEMP IS ");
-            System.out.println(temp);
 
-            assert(!temp.equals(""));
             assertNotEquals(store, null);
             assertNotEquals(store, new Store());
         } catch (DuchessException | ClassCastException e) {

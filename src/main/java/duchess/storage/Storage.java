@@ -205,7 +205,7 @@ public class Storage {
      * @param store store object
      * @return string representative of Store object
      */
-    public String getStoreToString(Store store) {
+    private String getStoreToString(Store store) {
         String jsonVal;
         try {
             jsonVal = getObjectMapper().writeValueAsString(store);
