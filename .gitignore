@@ -25,3 +25,6 @@ testEmptyData.json
 
 testNonEmptyData.json
 /testNonEmptyData.json
+
+testBlankData.json
+/testBlankData.json

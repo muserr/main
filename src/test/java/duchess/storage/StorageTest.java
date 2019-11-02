@@ -10,17 +10,17 @@ import duchess.model.task.Task;
 import duchess.model.task.Todo;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Deque;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
     final String emptyTestFilePath = "testEmptyData.json";
     final String nonEmptyTestFilePath = "testNonEmptyData.json";
+    final String blankTestFilePath = "testBlankData.json";
+
     private final String unreadableFileMessage
             = "Unable to read file, continuing with empty list.";
     private final String emptyRedoStackErrorMessage
@@ -33,7 +33,7 @@ public class StorageTest {
     @Test
     public void load_emptyFile_exceptionThrown() {
         try {
-            Storage storage = new Storage(emptyTestFilePath);
+            Storage storage = new Storage(blankTestFilePath);
             assertEquals(storage.load(), new Store());
 
         } catch (DuchessException | ClassCastException e) {
@@ -241,7 +241,45 @@ public class StorageTest {
             assertNotEquals(testStore, null);
 
             assertTrue(storage.getRedoStack().size() == 0);
-            assertEquals(getStoreToString(testStore),getStoreToString(storeB));
+            assertEquals(getStoreToString(testStore), getStoreToString(storeB));
+
+        } catch (DuchessException | ClassCastException e) {
+            assertEquals(e.getMessage(), unreadableFileMessage);
+        }
+    }
+
+    @Test
+    public void save_emptyStore_success() {
+        Storage storage = new Storage(emptyTestFilePath);
+        try {
+            Store storeBeforeSave = storage.load();
+
+            storage.save(storeBeforeSave);
+            Store storeAfterSave = storage.load();
+
+            assertEquals(getStoreToString(storeBeforeSave), getStoreToString(storeAfterSave));
+
+        } catch (DuchessException | ClassCastException e) {
+            assertEquals(e.getMessage(), unreadableFileMessage);
+        }
+    }
+
+    @Test
+    public void save_nonEmptyStore_success() {
+        Storage storageA = new Storage(emptyTestFilePath);
+        Storage storageB = new Storage(nonEmptyTestFilePath);
+        try {
+            Store storeA = new Store();
+            Store storeB = storageB.load();
+
+            assertNotEquals(getStoreToString(storeA), getStoreToString(storeB));
+
+            storageA.save(storeB);
+            Store storeAfterSave = storageA.load();
+            assertEquals(getStoreToString(storeAfterSave), getStoreToString(storeB));
+
+            // Clear contents of testEmptyData.json
+            storageA.save(new Store());
 
         } catch (DuchessException | ClassCastException e) {
             assertEquals(e.getMessage(), unreadableFileMessage);
