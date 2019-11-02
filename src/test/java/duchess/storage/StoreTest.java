@@ -125,4 +125,37 @@ public class StoreTest {
         Optional<Module> testModule = Optional.empty();
         assertEquals(testModule, store.findModuleByCode("CG2028"));
     }
+
+    @Test
+    public void setTaskList_validTaskList_success() {
+        Store store = new Store();
+        List<Task> testTaskList = new ArrayList<>();
+        String startDateTime = "02/11/2019 0800";
+        String endDateTime = "04/11/2019 1800";
+
+        try {
+            Task taskA = new Todo("Star jumps");
+            Task taskB = new Todo("Jogging with friends.");
+
+            Task taskC = new Event("Running"
+                    , Util.parseDateTime(endDateTime)
+                    , Util.parseDateTime(startDateTime));
+
+            assertTrue(store.getTaskList().size() == 0);
+
+            testTaskList.add(taskA);
+            testTaskList.add(taskB);
+            testTaskList.add(taskC);
+
+            assertTrue(store.getTaskList().size() == 0);
+            assertTrue(testTaskList.size() == 3);
+
+            store.setTaskList(testTaskList);
+
+            assertEquals(testTaskList, store.getTaskList());
+
+        } catch (DuchessException | DateTimeParseException | IndexOutOfBoundsException e) {
+            assertEquals(e.getMessage(), INVALID_FORMAT_MESSAGE);
+        }
+    }
 }
