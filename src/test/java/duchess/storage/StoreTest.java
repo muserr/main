@@ -158,4 +158,56 @@ public class StoreTest {
             assertEquals(e.getMessage(), INVALID_FORMAT_MESSAGE);
         }
     }
+
+    @Test
+    public void setModuleList_validModuleList_success() {
+        Store store = new Store();
+        List<Module> testModuleList = new ArrayList<>();
+
+        Module moduleA = new Module("CS1231", "Discrete Mathematics");
+        Module moduleB = new Module("CS2113T", "Software Engineering");
+        Module moduleC = new Module("CG2028", "Computer Organization");
+        Module moduleD = new Module("CG2027", "Transistor Level Digital Circuits");
+
+        assertTrue(store.getTaskList().size() == 0);
+
+        testModuleList.add(moduleA);
+        testModuleList.add(moduleB);
+        testModuleList.add(moduleC);
+        testModuleList.add(moduleD);
+
+        assertTrue(store.getModuleList().size() == 0);
+        assertTrue(testModuleList.size() == 4);
+
+        store.setModuleList(testModuleList);
+
+        assertEquals(testModuleList, store.getModuleList());
+    }
+
+    @Test
+    public void setDuchessCalendar_validDuchessCalendar_success() {
+        Store store = new Store();
+        List<CalendarEntry> testDuchessCalendar = new ArrayList<>();
+
+        try {
+            CalendarEntry entryA = new CalendarEntry(Util.parseDate("03/11/2019"), new ArrayList<Task>());
+            CalendarEntry entryB = new CalendarEntry(Util.parseDate("04/11/2019"), new ArrayList<Task>());
+            CalendarEntry entryC = new CalendarEntry(Util.parseDate("06/11/2019"), new ArrayList<Task>());
+
+            assertTrue(store.getTaskList().size() == 0);
+
+            testDuchessCalendar.add(entryA);
+            testDuchessCalendar.add(entryB);
+            testDuchessCalendar.add(entryC);
+
+            assertTrue(store.getDuchessCalendar().size() == 0);
+            assertTrue(testDuchessCalendar.size() == 3);
+
+            store.setDuchessCalendar(testDuchessCalendar);
+
+            assertEquals(testDuchessCalendar, store.getDuchessCalendar());
+        } catch (DuchessException e) {
+            assertEquals(e.getMessage(), new String());
+        }
+    }
 }
