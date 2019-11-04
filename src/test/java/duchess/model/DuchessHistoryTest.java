@@ -56,10 +56,10 @@ public class DuchessHistoryTest {
         DuchessHistory duchessHistory = new DuchessHistory();
 
         try {
-            Command command1 = new DoneCommand(2);
-            Command command2 = new HistoryCommand();
-            Command command3 = new ListTasksCommand();
-            Command command4 = new RedoCommand(new ArrayList<String>());
+            final Command command1 = new DoneCommand(2);
+            final Command command2 = new HistoryCommand();
+            final Command command3 = new ListTasksCommand();
+            final Command command4 = new RedoCommand(new ArrayList<String>());
 
             assertTrue(DuchessHistory.getValidCommandLog().size() == 0);
             duchessHistory.addValidCommands(command1);
