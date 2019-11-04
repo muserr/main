@@ -2,7 +2,7 @@ package duchess.commands;
 
 import duchess.exceptions.DuchessException;
 import duchess.logic.commands.ReminderCommand;
-import duchess.model.task.DuchessHistory;
+import duchess.model.DuchessHistory;
 import duchess.parser.Parser;
 import duchess.storage.Storage;
 import duchess.storage.Store;

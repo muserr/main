@@ -1,13 +1,11 @@
-package duchess.model.task;
+package duchess.model;
 
 import duchess.exceptions.DuchessException;
-import duchess.logic.commands.AddEventCommand;
 import duchess.logic.commands.Command;
 import duchess.logic.commands.DoneCommand;
 import duchess.logic.commands.HistoryCommand;
 import duchess.logic.commands.ListTasksCommand;
 import duchess.logic.commands.RedoCommand;
-import duchess.parser.Util;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

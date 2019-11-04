@@ -1,4 +1,4 @@
-package duchess.model.task;
+package duchess.model;
 
 import duchess.logic.commands.Command;
 

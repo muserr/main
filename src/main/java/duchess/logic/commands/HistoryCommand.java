@@ -1,7 +1,7 @@
 package duchess.logic.commands;
 
 import duchess.exceptions.DuchessException;
-import duchess.model.task.DuchessHistory;
+import duchess.model.DuchessHistory;
 import duchess.storage.Storage;
 import duchess.storage.Store;
 import duchess.ui.Ui;
