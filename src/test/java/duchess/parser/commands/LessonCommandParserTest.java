@@ -14,15 +14,15 @@ public class LessonCommandParserTest {
     @Test
     void parse() throws DuchessException {
         Map<String, String> parameters1 = Util
-                .parameterize("lesson /code CS1231 /type Lecture /time 27/09/2019 1100 " +
-                        "/to 27/09/2019 1300");
+                .parameterize("lesson /code CS1231 /type Lecture /time 27/09/2019 1100 "
+                        + "/to 27/09/2019 1300");
         assertTrue(
                 LessonCommandParser.parse(parameters1) instanceof AddLessonCommand
         );
 
         Map<String, String> parameters2 = Util
-                .parameterize("lesson /type lab /code CG2271 /time 28/09/2019 0800 /to " +
-                "28/09/2019 1000");
+                .parameterize("lesson /type lab /code CG2271 /time 28/09/2019 0800 /to "
+                        + "28/09/2019 1000");
         assertTrue(
                 LessonCommandParser.parse(parameters2) instanceof AddLessonCommand
         );
