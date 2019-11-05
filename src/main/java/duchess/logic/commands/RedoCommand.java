@@ -8,7 +8,7 @@ import duchess.ui.Ui;
 import java.util.List;
 
 /**
- * Restores previous undo command user executes.
+ * Redo feature.
  */
 public class RedoCommand extends Command {
     private int redoCounter;
