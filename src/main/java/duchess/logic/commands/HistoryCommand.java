@@ -17,7 +17,7 @@ public class HistoryCommand extends Command {
      * @param store store object
      * @param ui user interaction object
      * @param storage storage object
-     * @throws DuchessException exception thrown if invalid module code or start date
+     * @throws DuchessException if display is unsuccessful
      */
     @Override
     public void execute(Store store, Ui ui, Storage storage) throws DuchessException {
