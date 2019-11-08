@@ -162,11 +162,9 @@ public class Storage {
         // Add this string to undoStack
         undoStack.addLast(jsonVal);
 
-        // while (undoStack.size() > 10) {
         deleteExcessUndoStack();
 
-        // assert(undoStack.size() <= 10);
-        assert(undoStack.size() <= 5);
+        assert (undoStack.size() <= 10);
 
         try {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
@@ -238,7 +236,6 @@ public class Storage {
             redoStack.addFirst(jsonVal);
         }
 
-        // while (redoStack.size() > 10) {
         deleteExcessRedoStack();
     }
 
