@@ -74,7 +74,6 @@ public class UndoCommand extends Command {
             storage.addToRedoStack();
             setToPreviousStore(store, storage);
         }
-        // showUndo should only be placed after execution of undo.
         ui.showUndo(undoCounter);
     }
 
@@ -89,7 +88,6 @@ public class UndoCommand extends Command {
         storage.getLastSnapshot();
         storage.save(storage.peekUndoStackAsStore());
 
-        // Obtaining store from stack
         Store newStore = storage.load();
         assert (store.equals(newStore));
         store.setTaskList(newStore.getTaskList());

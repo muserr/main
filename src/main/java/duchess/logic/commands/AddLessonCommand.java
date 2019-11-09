@@ -60,13 +60,10 @@ public class AddLessonCommand extends Command {
         assert (academicYear != null);
 
         if (store.findModuleByCode(moduleCode).isEmpty()) {
-            // Throws an exception if module was not present before.
             throw new DuchessException(invalidModuleCode);
         } else if (!academicYear.isAcademicSemester(this.startDate)) {
-            // Throws an exception if startDate is not within semester.
             throw new DuchessException(invalidStartDate);
         } else {
-            // While AY not ended, and !recess_week && !reading_week. Add event.
             // Find out which Sem does date fall into first
             boolean isWithinSemOne = academicYear.isFirstSemester(startDate);
             boolean isWithinSemTwo = academicYear.isSecondSemester(startDate);
@@ -85,9 +82,8 @@ public class AddLessonCommand extends Command {
 
             for (int i = currentWeek; i <= studyWeeks; i++) {
                 if (academicYear.isSemesterBreak(i) == false) {
-                    // Add classes similar to add events.
                     addLessons(store, storage);
-                    // Both startCopy and endCopy dates MUST BE INCREMENTED to next week.
+                    // Both startCopy and endCopy dates to be incremented by 1 week.
                     startCopy = startCopy.plusWeeks(1);
                     endCopy = endCopy.plusWeeks(1);
                 }

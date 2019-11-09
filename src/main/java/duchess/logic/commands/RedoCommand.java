@@ -71,23 +71,20 @@ public class RedoCommand extends Command {
         } else if (storage.getRedoStack().size() > 0 && redoCounter == 1) {
             setToNextStore(store, storage);
         }
-        // showUndo should only be placed after execution of undo.
         ui.showRedo(redoCounter);
     }
 
     /**
-     * Updates data to previous Store values.
+     * Updates data to previous Store values as obtained from stack.
      *
      * @param store store object
      * @param storage storage object
      * @throws DuchessException if updating store is unsuccessful
      */
     private void setToNextStore(Store store, Storage storage) throws DuchessException {
-        // Obtain Store data from duchess.storage Stack
         Store prevStore = storage.getFirstSnapshot();
         storage.save(prevStore);
 
-        // Obtaining store from stack
         Store newStore = storage.load();
         store.setTaskList(newStore.getTaskList());
         store.setModuleList(newStore.getModuleList());
