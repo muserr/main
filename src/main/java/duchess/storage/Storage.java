@@ -187,10 +187,20 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns an undoStack.
+     *
+     * @return undoStack
+     */
     public Deque<String> getUndoStack() {
         return this.undoStack;
     }
 
+    /**
+     * Returns a redoStack.
+     *
+     * @return redoStack
+     */
     public Deque<String> getRedoStack() {
         return this.redoStack;
     }
@@ -245,13 +255,18 @@ public class Storage {
         deleteExcessRedoStack();
     }
 
-
+    /**
+     * Sets redoStack to specified size.
+     */
     private void deleteExcessRedoStack() {
         while (redoStack.size() > storageSize) {
             redoStack.pollLast();
         }
     }
 
+    /**
+     * Sets undoStack to specified size.
+     */
     private void deleteExcessUndoStack() {
         while (undoStack.size() > storageSize) {
             undoStack.pollFirst();
