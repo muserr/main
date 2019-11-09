@@ -48,8 +48,6 @@ public class DeleteLessonCommand extends Command {
                 isDeleted = true;
 
                 store.setDuchessCalendar(CalendarManager.deleteEntry(store.getDuchessCalendar(), task));
-
-                // Decrement i by 1 every time removal is performed.
                 i--;
             }
         }
