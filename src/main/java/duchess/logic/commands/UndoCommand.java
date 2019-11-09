@@ -13,8 +13,7 @@ import java.util.logging.Logger;
  * Undo feature.
  */
 public class UndoCommand extends Command {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+    private final Logger logger;
     private int undoCounter;
     private static final String UNDO_USAGE_ERROR_MESSAGE = "Usage: undo [number]";
     private static final String NEGATIVE_NUMBER_ERROR_MESSAGE
@@ -29,6 +28,7 @@ public class UndoCommand extends Command {
      * @throws DuchessException throws exceptions if invalid command
      */
     public UndoCommand(List<String> words) throws DuchessException {
+        this.logger = Logger.getLogger("Duchess");
         if (words.size() != 1 && words.size() != 0) {
             throw new DuchessException(UNDO_USAGE_ERROR_MESSAGE);
         } else if (words.size() == 1) {

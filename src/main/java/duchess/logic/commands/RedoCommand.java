@@ -13,8 +13,7 @@ import java.util.logging.Logger;
  * Redo feature.
  */
 public class RedoCommand extends Command {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+    private final Logger logger;
     private int redoCounter;
     private static final String REDO_USAGE_ERROR_MESSAGE = "Usage: redo [number]";
     private static final String NEGATIVE_NUMBER_ERROR_MESSAGE
@@ -29,6 +28,7 @@ public class RedoCommand extends Command {
      * @throws DuchessException if invalid command
      */
     public RedoCommand(List<String> words) throws DuchessException {
+        this.logger = Logger.getLogger("Duchess");
         if (words.size() != 1 && words.size() != 0) {
             throw new DuchessException(REDO_USAGE_ERROR_MESSAGE);
         } else if (words.size() == 1) {
