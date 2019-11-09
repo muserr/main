@@ -76,14 +76,12 @@ public class AddLessonCommand extends Command {
                 compareDate = academicYear.getSemTwoStart();
             }
 
-            // Find the corresponding week for the semester.
             int currentWeek = academicYear.getWeekAsInt(compareDate, startDate);
             int prevTaskListSize = store.getTaskList().size();
 
             for (int i = currentWeek; i <= studyWeeks; i++) {
                 if (academicYear.isSemesterBreak(i) == false) {
                     addLessons(store, storage);
-                    // Both startCopy and endCopy dates to be incremented by 1 week.
                     startCopy = startCopy.plusWeeks(1);
                     endCopy = endCopy.plusWeeks(1);
                 }
