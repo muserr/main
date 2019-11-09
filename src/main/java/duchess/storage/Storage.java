@@ -155,6 +155,7 @@ public class Storage {
         String jsonVal = redoStack.pollFirst();
         // Add this string to undoStack
         undoStack.addLast(jsonVal);
+        assert (undoStack.size() != 0);
 
         try {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
