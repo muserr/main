@@ -8,6 +8,7 @@ import duchess.model.task.Todo;
 import duchess.parser.Parser;
 import duchess.parser.Util;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class Seed {
      *
      * @param store the store to seed
      */
-    public static void execute(Store store) throws DuchessException {
+    public static void execute(Store store) {
         // Modules
         Module a = new Module("CS1231", "Discrete Mathematics");
         Module b = new Module("CS2040", "Algorithms");
@@ -41,9 +42,15 @@ public class Seed {
         List.of(g, h, i, j, k).forEach(x -> store.getTaskList().add(x));
 
         // Deadlines
-        Task l = new Deadline("PPP submission", Util.parseDateTime("23/12/2019 0800"));
-        Task m = new Deadline("Term Paper submission", Util.parseDateTime("02/12/2019 1400"));
-        Task n = new Deadline("Buy Christmas gifts", Util.parseDateTime("24/12/2019 2359"));
-        List.of(l, m, n).forEach(x -> store.getTaskList().add(x));
+        LocalDateTime time1 = LocalDateTime.of(2019, 12, 23, 8, 00);
+        LocalDateTime time2 = LocalDateTime.of(2019, 12, 2, 14, 00);
+        LocalDateTime time3 = LocalDateTime.of(2019, 12, 24, 23, 59);
+        LocalDateTime time4 = LocalDateTime.of(2019, 12, 13, 23, 59);
+        Task l = new Deadline("PPP submission", time1);
+        Task m = new Deadline("Term Paper submission", time2);
+        Task n = new Deadline("Buy Christmas gifts", time3);
+        Task o = new Deadline("Send email to friends.", time4);
+
+        List.of(l, m, n, o).forEach(x -> store.getTaskList().add(x));
     }
 }
