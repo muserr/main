@@ -12,7 +12,7 @@ We are a Chess team based in the http://www.comp.nus.edu.sg[School of Computing,
 === *Ng Jing Kiat*
 image::muserr.png[width="150", align="left"]
 https://github.com/muserr[Pawn Muserr pass:[<i class="fa fa-github"></i>]]
-https://drive.google.com/file/d/1lZHyjh_hPb4fJO7o_gnCFwC-Iz2bkPK_/view?usp=sharing[Portfolio]
+https://drive.google.com/file/d/1zfYGZMyuqzR1nTZhnzGk9IPO1PS6xnWA/view?usp=sharing[Portfolio]
 
 Role:
 
