@@ -58,6 +58,7 @@ Responsibilities:
 === *Nishanth Elango*
 image::nishanthelango.png[width="150", align="left"]
 https://github.com/nishanthelango[Knight Nishanth pass:[<i class="fa fa-github"></i>]]
+https://docs.google.com/document/d/1iDoC3kzPnv-2kNrMOEyNSpSmzh_9CWbC0QgVH_HDF3w/edit?usp=sharing[Portfolio]
 
 Role:
 
