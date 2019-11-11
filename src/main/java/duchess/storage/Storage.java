@@ -173,13 +173,10 @@ public class Storage {
             Store store = getObjectMapper().readValue(jsonVal, Store.class);
             return store;
         } catch (JsonParseException e) {
-            e.printStackTrace();
             throw new DuchessException(JSON_PARSE_ERROR_MESSAGE);
         } catch (JsonMappingException e) {
-            e.printStackTrace();
             throw new DuchessException(UNSUCCESSFUL_MAP_ERROR_MESSAGE);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DuchessException(DUCHESS_STORAGE_ERROR_MESSAGE);
         }
     }
